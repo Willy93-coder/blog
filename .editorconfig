@@ -1,0 +1,59 @@
+root = true
+
+# -----------------------------------
+# Global defaults
+# -----------------------------------
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# -----------------------------------
+# Vue Single File Components
+# -----------------------------------
+[*.vue]
+indent_style = space
+indent_size = 2
+
+# Important for HTML templates
+max_line_length = off
+
+# Prevent the editor from breaking inner HTML indentation
+html_indent_inner_html = true
+
+# -----------------------------------
+# HTML files (for consistency)
+# -----------------------------------
+[*.html]
+indent_style = space
+indent_size = 2
+max_line_length = off
+
+# -----------------------------------
+# Scripts & config files
+# -----------------------------------
+[*.{js,ts,cjs,mjs}]
+indent_style = space
+indent_size = 2
+
+[*.json]
+indent_style = space
+indent_size = 2
+
+# -----------------------------------
+# Styles
+# -----------------------------------
+[*.{css,scss,postcss}]
+indent_style = space
+indent_size = 2
+
+# -----------------------------------
+# Markdown (README, docs)
+# -----------------------------------
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
