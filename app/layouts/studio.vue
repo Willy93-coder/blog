@@ -2,6 +2,8 @@
 import type { NavigationMenuItem } from "@nuxt/ui";
 import UserMenu from "~/components/common/user-menu.vue";
 
+const route = useRoute();
+
 const items: NavigationMenuItem[][] = [
   [
     {
@@ -36,7 +38,21 @@ const items: NavigationMenuItem[][] = [
   ],
 ];
 
-const navbarTitle = "Blog Studio";
+const breadcrumbItems = computed(() => {
+  const baseUrl = "/studio";
+  const paths = route.path.replace(baseUrl, "").split("/").filter(Boolean);
+
+  const items = paths.map((path, index) => {
+    const to = baseUrl + "/" + paths.slice(0, index + 1).join("/");
+
+    return {
+      label: decodeURIComponent(path.charAt(0).toUpperCase() + path.slice(1)),
+      to,
+    };
+  });
+
+  return [{ label: "Studio" }, ...items];
+});
 </script>
 
 <template>
@@ -85,9 +101,16 @@ const navbarTitle = "Blog Studio";
     </UDashboardSidebar>
     <UDashboardPanel>
       <template #header>
-        <UDashboardNavbar :title="navbarTitle">
+        <UDashboardNavbar>
           <template #leading>
             <UDashboardSidebarCollapse />
+          </template>
+          <template #trailing>
+            <UBreadcrumb :items="breadcrumbItems">
+              <template #separator>
+                <span class="mx-2 text-muted">/</span>
+              </template>
+            </UBreadcrumb>
           </template>
         </UDashboardNavbar>
       </template>
