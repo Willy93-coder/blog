@@ -115,9 +115,7 @@ const breadcrumbItems = computed(() => {
         </UDashboardNavbar>
       </template>
       <template #body>
-        <div
-          class="border-2 border-dashed border-default rounded-md p-4 flex-1"
-        >
+        <div class="flex-1">
           <slot />
         </div>
       </template>
