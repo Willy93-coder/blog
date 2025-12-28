@@ -1,7 +1,7 @@
 import type { ButtonProps } from '@nuxt/ui';
 
 export type Post = {
-  id: number;
+  id: string;
   title: string;
   subtitle?: string;
   content: string;
@@ -11,7 +11,13 @@ export type Post = {
   createdAt: Date;
 };
 
-export type PostActionType = 'save' | 'publish' | 'unpublish';
+export const PostAction = {
+  Save: 'save',
+  Publish: 'publish',
+  Unpublish: 'unpublish',
+} as const;
+
+export type PostActionType = (typeof PostAction)[keyof typeof PostAction];
 
 export type PostAction = {
   type: PostActionType;
