@@ -9,10 +9,19 @@
   const route = useRoute();
   const isNew = route.params.url === 'new';
 
-  const post = ref<Partial<Post>>(isNew ? { title: '' } : { title: 'Sample Post Title', id: 1, published: true });
+  const post = isNew
+    ? undefined
+    : {
+        id: '1',
+        title: 'Sample Post Title',
+        content: 'Sample content',
+        published: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
 
   const postFormStore = usePostFormStore();
-  postFormStore.init(post.value);
+  postFormStore.init(post);
 
   postFormStore.onSuccess((updatedPost: Post, action: PostActionType) => {
     let title = 'Post saved successfully';
