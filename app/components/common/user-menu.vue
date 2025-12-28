@@ -1,80 +1,80 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import type { DropdownMenuItem } from "@nuxt/ui";
+  import { ref, computed } from 'vue';
+  import type { DropdownMenuItem } from '@nuxt/ui';
 
-defineProps<{
-  collapsed?: boolean;
-}>();
+  defineProps<{
+    collapsed?: boolean;
+  }>();
 
-const colorMode = useColorMode();
+  const colorMode = useColorMode();
 
-const user = ref({
-  name: "User user",
-  avatar: {
-    src: "",
-    alt: "User user",
-  },
-});
-
-const items = computed<DropdownMenuItem[][]>(() => [
-  [
-    {
-      type: "label",
-      label: user.value.name,
-      avatar: user.value.avatar,
+  const user = ref({
+    name: 'User user',
+    avatar: {
+      src: '',
+      alt: 'User user',
     },
-  ],
-  [
-    {
-      label: "Appearance",
-      icon: "i-lucide-sun-moon",
-      children: [
-        {
-          label: "Light",
-          icon: "i-lucide-sun",
-          type: "checkbox",
-          checked: colorMode.value === "light",
-          onSelect(e: Event) {
-            e.preventDefault();
+  });
 
-            colorMode.value = "light";
-          },
-        },
-        {
-          label: "Dark",
-          icon: "i-lucide-moon",
-          type: "checkbox",
-          checked: colorMode.value === "dark",
-          onUpdateChecked(checked: boolean) {
-            if (checked) {
-              colorMode.value = "dark";
-            }
-          },
-          onSelect(e: Event) {
-            e.preventDefault();
-          },
-        },
-      ],
-    },
-  ],
-  [
-    {
-      label: "GitHub repository",
-      icon: "simple-icons:github",
-      to: "https://github.com/Willy93-coder/blog",
-      target: "_blank",
-    },
-  ],
-  [
-    {
-      label: "Log out",
-      icon: "i-lucide-log-out",
-      onSelect() {
-        // clean session and redirect to login page
+  const items = computed<DropdownMenuItem[][]>(() => [
+    [
+      {
+        type: 'label',
+        label: user.value.name,
+        avatar: user.value.avatar,
       },
-    },
-  ],
-]);
+    ],
+    [
+      {
+        label: 'Appearance',
+        icon: 'i-lucide-sun-moon',
+        children: [
+          {
+            label: 'Light',
+            icon: 'i-lucide-sun',
+            type: 'checkbox',
+            checked: colorMode.value === 'light',
+            onSelect(e: Event) {
+              e.preventDefault();
+
+              colorMode.value = 'light';
+            },
+          },
+          {
+            label: 'Dark',
+            icon: 'i-lucide-moon',
+            type: 'checkbox',
+            checked: colorMode.value === 'dark',
+            onUpdateChecked(checked: boolean) {
+              if (checked) {
+                colorMode.value = 'dark';
+              }
+            },
+            onSelect(e: Event) {
+              e.preventDefault();
+            },
+          },
+        ],
+      },
+    ],
+    [
+      {
+        label: 'GitHub repository',
+        icon: 'simple-icons:github',
+        to: 'https://github.com/Willy93-coder/blog',
+        target: '_blank',
+      },
+    ],
+    [
+      {
+        label: 'Log out',
+        icon: 'i-lucide-log-out',
+        onSelect() {
+          // clean session and redirect to login page
+        },
+      },
+    ],
+  ]);
 </script>
 
 <template>
