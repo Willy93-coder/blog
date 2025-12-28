@@ -19,7 +19,7 @@
     if (action === 'publish') title = 'Post published successfully';
     else if (action === 'unpublish') title = 'Post unpublished successfully';
 
-    toast.add({ title });
+    toast.add({ title, color: 'success' });
 
     if (action === 'save') {
       // redirect to new post URL (check if the updated post has different url before redirecting)
@@ -27,7 +27,7 @@
   });
 
   postFormStore.onError((error: string, action: PostActionType) => {
-    toast.add({ title: `Error: ${error}` });
+    toast.add({ title: `Error: ${error}`, color: 'error' });
   });
 </script>
 
