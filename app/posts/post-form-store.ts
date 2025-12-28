@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { postFormSchema, type PostForm } from '~/posts/schemas';
 import type { PostAction, PostActionType, Post } from '~/posts/types';
 import { reactive, ref, computed } from 'vue';
+import { createPost, publishPost, unpublishPost, updatePost } from './actions';
 
 function getPostActions(post: Partial<Post>): PostAction[] {
   const list: PostAction[] = [];
@@ -32,26 +33,32 @@ function getPostActions(post: Partial<Post>): PostAction[] {
 
   return list;
 }
+export const State = {
+  Idle: 'idle',
+  Ready: 'ready',
+  Submitting: 'submitting',
+  Error: 'error',
+} as const;
 
 type Errors<T> = {
   [K in keyof T | 'general']?: string;
 };
 
 type IdleState = {
-  status: 'idle';
+  status: typeof State.Idle;
 };
 
 type ReadyState = {
-  status: 'ready';
+  status: typeof State.Ready;
 };
 
 type SubmittingState = {
-  status: 'submitting';
+  status: typeof State.Submitting;
   action: PostActionType;
 };
 
 type ErrorState<T> = {
-  status: 'error';
+  status: typeof State.Error;
   errors: Errors<T>;
 };
 
@@ -109,17 +116,18 @@ export const usePostFormStore = defineStore('post-form', () => {
         return;
       }
 
-      // Api call simulation
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          // mock error for duplicate titles
-          if (form.title === 'duplicate') {
-            reject(new Error('Title already exists'));
-          } else {
-            resolve(true);
-          }
-        }, 1000);
-      });
+      switch (action) {
+        case 'save':
+          if (form.id) updatePost({ ...form, id: form.id });
+          else createPost(form);
+          break;
+        case 'publish':
+          if (originalPost.id) publishPost(originalPost.id);
+          break;
+        case 'unpublish':
+          if (originalPost.id) unpublishPost(originalPost.id);
+          break;
+      }
 
       uiState.value = { status: 'ready' };
       successCallback?.(form as Post, action);
