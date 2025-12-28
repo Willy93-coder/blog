@@ -1,4 +1,4 @@
-import type { ButtonProps } from "@nuxt/ui";
+import type { ButtonProps } from '@nuxt/ui';
 
 export type Post = {
   id: number;
@@ -11,11 +11,11 @@ export type Post = {
   createdAt: Date;
 };
 
-export type PostActionType = "save" | "publish" | "unpublish";
+export type PostActionType = 'save' | 'publish' | 'unpublish';
 
 export type PostAction = {
   type: PostActionType;
   label: string;
   icon: string;
-  color: ButtonProps["color"];
+  color: ButtonProps['color'];
 };

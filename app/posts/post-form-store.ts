@@ -1,83 +1,80 @@
-import { defineStore } from "pinia";
-import { postFormSchema, type PostForm } from "~/posts/schemas";
-import type { PostAction, PostActionType, Post } from "~/posts/types";
-import { reactive, ref, computed } from "vue";
+import { defineStore } from 'pinia';
+import { postFormSchema, type PostForm } from '~/posts/schemas';
+import type { PostAction, PostActionType, Post } from '~/posts/types';
+import { reactive, ref, computed } from 'vue';
 
 function getPostActions(post: Partial<Post>): PostAction[] {
   const list: PostAction[] = [];
   if (post.id) {
     if (post.published) {
       list.push({
-        type: "unpublish",
-        label: "Unpublish",
-        icon: "i-lucide-book-lock",
-        color: "secondary",
+        type: 'unpublish',
+        label: 'Unpublish',
+        icon: 'i-lucide-book-lock',
+        color: 'secondary',
       });
     } else {
       list.push({
-        type: "publish",
-        label: "Publish",
-        icon: "i-lucide-book-open-check",
-        color: "secondary",
+        type: 'publish',
+        label: 'Publish',
+        icon: 'i-lucide-book-open-check',
+        color: 'secondary',
       });
     }
   }
 
   list.push({
-    type: "save",
-    label: "Save",
-    icon: "i-lucide-save",
-    color: "primary",
+    type: 'save',
+    label: 'Save',
+    icon: 'i-lucide-save',
+    color: 'primary',
   });
 
   return list;
 }
 
 type Errors<T> = {
-  [K in keyof T | "general"]?: string;
+  [K in keyof T | 'general']?: string;
 };
 
 type IdleState = {
-  status: "idle";
+  status: 'idle';
 };
 
 type ReadyState = {
-  status: "ready";
+  status: 'ready';
 };
 
 type SubmittingState = {
-  status: "submitting";
+  status: 'submitting';
   action: PostActionType;
 };
 
 type ErrorState<T> = {
-  status: "error";
+  status: 'error';
   errors: Errors<T>;
 };
 
 type UiState<T> = IdleState | ReadyState | SubmittingState | ErrorState<T>;
 
-export const usePostFormStore = defineStore("post-form", () => {
-  const form = reactive<PostForm>({ title: "" });
+export const usePostFormStore = defineStore('post-form', () => {
+  const form = reactive<PostForm>({ title: '' });
   const originalPost = reactive<Partial<Post>>({});
 
   const uiState = ref<UiState<PostForm>>({
-    status: "idle",
+    status: 'idle',
   });
 
-  let successCallback:
-    | ((updatedPost: Post, action: PostActionType) => void)
-    | null = null;
-  let errorCallback: ((error: string, action: PostActionType) => void) | null =
-    null;
+  let successCallback: ((updatedPost: Post, action: PostActionType) => void) | null = null;
+  let errorCallback: ((error: string, action: PostActionType) => void) | null = null;
 
   const actions = computed<PostAction[]>(() => getPostActions(originalPost));
 
   function init(initial?: Partial<Post>) {
-    form.title = initial?.title ?? "";
+    form.title = initial?.title ?? '';
     Object.assign(originalPost, initial ?? {});
 
-    uiState.value = { status: "ready" };
+    uiState.value = { status: 'ready' };
   }
 
   function onSuccess(cb: (updatedPost: Post, action: PostActionType) => void) {
@@ -89,10 +86,10 @@ export const usePostFormStore = defineStore("post-form", () => {
   }
 
   async function submit(action: PostActionType) {
-    if (uiState.value.status === "submitting") return;
+    if (uiState.value.status === 'submitting') return;
 
     uiState.value = {
-      status: "submitting",
+      status: 'submitting',
       action,
     };
 
@@ -106,7 +103,7 @@ export const usePostFormStore = defineStore("post-form", () => {
         });
 
         uiState.value = {
-          status: "error",
+          status: 'error',
           errors: fieldErrors,
         };
         return;
@@ -116,20 +113,20 @@ export const usePostFormStore = defineStore("post-form", () => {
       await new Promise((resolve, reject) => {
         setTimeout(() => {
           // mock error for duplicate titles
-          if (form.title === "duplicate") {
-            reject(new Error("Title already exists"));
+          if (form.title === 'duplicate') {
+            reject(new Error('Title already exists'));
           } else {
             resolve(true);
           }
         }, 1000);
       });
 
-      uiState.value = { status: "ready" };
+      uiState.value = { status: 'ready' };
       successCallback?.(form as Post, action);
     } catch (e: any) {
-      if (e.message === "Title already exists") {
+      if (e.message === 'Title already exists') {
         uiState.value = {
-          status: "error",
+          status: 'error',
           errors: {
             title: e.message,
           },
@@ -139,9 +136,9 @@ export const usePostFormStore = defineStore("post-form", () => {
       }
 
       uiState.value = {
-        status: "error",
+        status: 'error',
         errors: {
-          general: e.message || "Something went wrong",
+          general: e.message || 'Something went wrong',
         },
       };
       errorCallback?.(e.message, action);
