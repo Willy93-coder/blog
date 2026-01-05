@@ -5,14 +5,14 @@ const AuthService = () => {
   return {
     signInWithGitHub: async () =>
       await $supabase.auth.signInWithOAuth({
-        provider: "github",
+        provider: 'github',
         options: {
-          redirectTo: appUrl.absoluteStudio({ toast: "login_success" }),
+          redirectTo: appUrl.absoluteStudio({ toast: 'login_success' }),
         },
       }),
     signOut: async () => await $supabase.auth.signOut(),
     isAllowedUser: async () => {
-      const { data, error } = await $supabase.rpc("is_allowlisted");
+      const { data, error } = await $supabase.rpc('is_allowlisted');
 
       if (error) return { allowed: false, error };
 

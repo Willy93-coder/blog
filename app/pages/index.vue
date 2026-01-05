@@ -1,7 +1,7 @@
 <script setup lang="ts">
-definePageMeta({
-  public: true,
-});
+  definePageMeta({
+    public: true,
+  });
 </script>
 
 <template>

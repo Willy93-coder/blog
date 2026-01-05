@@ -2,11 +2,11 @@ const useAppUrl = () => {
   const config = useRuntimeConfig();
 
   // Base URL
-  const base = String(config.public.siteUrl || "").replace(/\/$/, "");
+  const base = String(config.public.siteUrl || '').replace(/\/$/, '');
 
   // Helper
   const join = (path: string, query?: Record<string, string>) => {
-    const url = new URL(path.startsWith("/") ? path : `/${path}`, base);
+    const url = new URL(path.startsWith('/') ? path : `/${path}`, base);
 
     if (query) {
       Object.entries(query).forEach(([key, value]) => {
@@ -21,7 +21,7 @@ const useAppUrl = () => {
     base,
 
     // Absolute studio URL with optional query
-    absoluteStudio: (query?: { toast?: string }) => join("/studio", query),
+    absoluteStudio: (query?: { toast?: string }) => join('/studio', query),
   };
 };
 
