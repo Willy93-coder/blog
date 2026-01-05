@@ -1,8 +1,8 @@
 const useRoutes = () => {
   return {
     home: () => '/',
-    login: () => 'login',
-    studio: () => 'studio',
+    login: () => '/login',
+    studio: () => '/studio',
   } as const;
 };
 
