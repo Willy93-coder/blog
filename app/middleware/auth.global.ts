@@ -3,9 +3,18 @@ export default defineNuxtRouteMiddleware(async (to) => {
   if (to.meta.public) return;
 
   const routes = useRoutes();
-  const authService = AuthService();
+  const auth = AuthService();
+  const { $supabase } = useNuxtApp();
 
-  const { allowed } = await authService.isAllowedUser();
+  const { data, error } = await $supabase.auth.getSession();
+  const session = data?.session;
 
-  if (!allowed) return navigateTo(routes.login());
+  if (error || !session) return navigateTo(routes.login());
+
+  const { allowed, error: allowedErr } = await auth.isAllowedUser();
+
+  if (allowedErr || !allowed) {
+    await auth.signOut();
+    return navigateTo(routes.login());
+  }
 });
