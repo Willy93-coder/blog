@@ -1,6 +1,6 @@
 <script setup lang="ts">
   const toast = useToast();
-  const authService = AuthService();
+  const authService = useAuth();
   const routes = useRoutes();
   const route = useRoute();
   const router = useRouter();
