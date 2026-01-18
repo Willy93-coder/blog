@@ -5,7 +5,7 @@
     public: true,
   });
 
-  const authService = AuthService();
+  const authService = useAuth();
   const toast = useToast();
 
   const providers = ref<ButtonProps[]>([
