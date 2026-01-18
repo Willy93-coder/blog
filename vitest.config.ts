@@ -6,6 +6,15 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],
+      exclude: [
+        '**/node_modules/**',
+        '**/.nuxt/**',
+        '**/dist/**',
+        '**/coverage/**',
+        'app.vue',
+        'app/assets/**',
+        'app/pages/**',
+      ],
       thresholds: {
         lines: 70,
         functions: 70,
