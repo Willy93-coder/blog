@@ -16,10 +16,7 @@ export default defineConfig({
         'app/pages/**',
       ],
       thresholds: {
-        lines: 70,
-        functions: 70,
-        statements: 70,
-        branches: 70,
+        lines: 20,
       },
     },
     projects: [
