@@ -1,4 +1,7 @@
-const AuthService = () => {
+import { useNuxtApp } from '#app';
+import { useAppUrl } from '~/composables/useAppUrl';
+
+const useAuth = () => {
   const { $supabase } = useNuxtApp();
   const appUrl = useAppUrl();
 
@@ -21,4 +24,4 @@ const AuthService = () => {
   };
 };
 
-export { AuthService };
+export { useAuth };
