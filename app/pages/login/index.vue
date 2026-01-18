@@ -1,14 +1,32 @@
 <script setup lang="ts">
-import type { ButtonProps } from "@nuxt/ui";
+  import type { ButtonProps } from '@nuxt/ui';
 
-const providers = ref<ButtonProps[]>([
-  {
-    label: "GitHub",
-    icon: "i-simple-icons-github",
-    color: "neutral",
-    variant: "subtle",
-  },
-]);
+  definePageMeta({
+    public: true,
+  });
+
+  const authService = useAuth();
+  const toast = useToast();
+
+  const providers = ref<ButtonProps[]>([
+    {
+      label: 'GitHub',
+      icon: 'i-simple-icons-github',
+      color: 'neutral',
+      variant: 'subtle',
+      onClick: async () => {
+        const { error } = await authService.signInWithGitHub();
+        if (error !== null) {
+          toast.add({
+            title: 'Uh oh! Something went wrong.',
+            description: 'There was a problem with your request.',
+            icon: 'i-lucide-log-in',
+          });
+          return;
+        }
+      },
+    },
+  ]);
 </script>
 
 <template>
