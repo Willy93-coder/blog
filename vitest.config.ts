@@ -3,6 +3,22 @@ import { defineVitestProject } from '@nuxt/test-utils/config';
 
 export default defineConfig({
   test: {
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'lcov'],
+      exclude: [
+        '**/node_modules/**',
+        '**/.nuxt/**',
+        '**/dist/**',
+        '**/coverage/**',
+        'app.vue',
+        'app/assets/**',
+        'app/pages/**',
+      ],
+      thresholds: {
+        lines: 20,
+      },
+    },
     projects: [
       {
         test: {
