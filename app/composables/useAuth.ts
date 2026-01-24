@@ -21,6 +21,7 @@ const useAuth = () => {
 
       return { allowed: Boolean(data), error: null };
     },
+    getSession: async () => await $supabase.auth.getSession(),
   };
 };
 

@@ -1,4 +1,4 @@
-import { defineNuxtRouteMiddleware, navigateTo, useNuxtApp } from '#app';
+import { defineNuxtRouteMiddleware, navigateTo } from '#app';
 import { useRoutes } from '~/composables/useRoutes';
 import { useAuth } from '~/composables/useAuth';
 
@@ -8,12 +8,15 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   const routes = useRoutes();
   const auth = useAuth();
-  const { $supabase } = useNuxtApp();
+  const sessionState = useSessionState();
 
-  const { data, error } = await $supabase.auth.getSession();
+  const { data, error } = await auth.getSession();
   const session = data?.session;
 
-  if (error || !session) return navigateTo(routes.login());
+  if (error || !session) {
+    sessionState.value = null;
+    return navigateTo(routes.login());
+  }
 
   const { allowed, error: allowedErr } = await auth.isAllowedUser();
 
@@ -21,4 +24,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
     await auth.signOut();
     return navigateTo(routes.login());
   }
+
+  sessionState.value = session;
 });

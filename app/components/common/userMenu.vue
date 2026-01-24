@@ -1,27 +1,35 @@
 <script setup lang="ts">
-  import { ref, computed } from 'vue';
+  import { computed, toRefs } from 'vue';
   import type { DropdownMenuItem } from '@nuxt/ui';
 
-  defineProps<{
+  const props = defineProps<{
     collapsed?: boolean;
+    user: {
+      github_username: string;
+      github_avatar_url: string;
+      full_name: string;
+    } | null;
+    onLogout: () => void | Promise<void>;
   }>();
 
+  const { collapsed, user, onLogout } = toRefs(props);
+  const userFullName = computed(() => user.value?.full_name ?? 'User user');
+  const avatar = computed(() =>
+    user.value?.github_avatar_url
+      ? { src: user.value.github_avatar_url, alt: user.value.full_name ?? 'User' }
+      : undefined,
+  );
+  const githubUserUrl = computed(() =>
+    user.value?.github_username ? `https://www.github.com/${user.value?.github_username}` : undefined,
+  );
   const colorMode = useColorMode();
-
-  const user = ref({
-    name: 'User user',
-    avatar: {
-      src: '',
-      alt: 'User user',
-    },
-  });
 
   const items = computed<DropdownMenuItem[][]>(() => [
     [
       {
         type: 'label',
-        label: user.value.name,
-        avatar: user.value.avatar,
+        label: userFullName.value,
+        avatar: avatar.value,
       },
     ],
     [
@@ -61,7 +69,7 @@
       {
         label: 'GitHub repository',
         icon: 'simple-icons:github',
-        to: 'https://github.com/Willy93-coder/blog',
+        to: githubUserUrl.value,
         target: '_blank',
       },
     ],
@@ -70,7 +78,7 @@
         label: 'Log out',
         icon: 'i-lucide-log-out',
         onSelect() {
-          // clean session and redirect to login page
+          onLogout.value();
         },
       },
     ],
@@ -87,8 +95,8 @@
   >
     <UButton
       v-bind="{
-        ...user,
-        label: collapsed ? undefined : user?.name,
+        ...(user ?? {}),
+        label: collapsed ? undefined : userFullName,
         trailingIcon: collapsed ? undefined : 'i-lucide-chevrons-up-down',
       }"
       color="neutral"
