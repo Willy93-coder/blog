@@ -4,12 +4,10 @@ const getSessionMock = vi.fn();
 const navigateToMock = vi.fn((path: string) => ({ redirect: path }));
 const isAllowedUserMock = vi.fn();
 const signOutMock = vi.fn();
+const sessionStateMock = { value: null as any };
 
 vi.mock('#app', () => ({
   defineNuxtRouteMiddleware: (fn: any) => fn,
-  useNuxtApp: () => ({
-    $supabase: { auth: { getSession: getSessionMock } },
-  }),
   navigateTo: navigateToMock,
 }));
 
@@ -19,19 +17,26 @@ vi.mock('~/composables/useRoutes', () => ({
 
 vi.mock('~/composables/useAuth', () => ({
   useAuth: () => ({
+    getSession: getSessionMock,
     isAllowedUser: isAllowedUserMock,
     signOut: signOutMock,
   }),
+}));
+
+vi.mock('~/composables/useSessionState', () => ({
+  useSessionState: () => sessionStateMock,
 }));
 
 describe('Auth middleware', () => {
   const from = {} as any;
   beforeEach(() => {
     vi.clearAllMocks();
+
     getSessionMock.mockResolvedValue({
       data: { session: null },
       error: null,
     });
+
     isAllowedUserMock.mockResolvedValue({
       allowed: true,
       error: null,
@@ -62,6 +67,7 @@ describe('Auth middleware', () => {
     expect(navigateToMock).toHaveBeenCalledWith('/login');
     expect(isAllowedUserMock).not.toHaveBeenCalled();
     expect(signOutMock).not.toHaveBeenCalled();
+    expect(sessionStateMock.value).toBeNull();
   });
 
   it('should redirect to /login when an error occurs while retrieving session', async () => {
@@ -80,6 +86,7 @@ describe('Auth middleware', () => {
     expect(navigateToMock).toHaveBeenCalledWith('/login');
     expect(isAllowedUserMock).not.toHaveBeenCalled();
     expect(signOutMock).not.toHaveBeenCalled();
+    expect(sessionStateMock.value).toBeNull();
   });
 
   it('should allow access when session exists', async () => {
@@ -97,6 +104,7 @@ describe('Auth middleware', () => {
     expect(navigateToMock).not.toHaveBeenCalled();
     expect(isAllowedUserMock).toHaveBeenCalledTimes(1);
     expect(signOutMock).not.toHaveBeenCalled();
+    expect(sessionStateMock.value).toEqual({ access_token: 'x' });
   });
 
   it('should sign out and redirect to /login when session exists but user is not allowed', async () => {
