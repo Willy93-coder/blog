@@ -1,8 +1,42 @@
 <script setup lang="ts">
   import type { NavigationMenuItem } from '@nuxt/ui';
-  import UserMenu from '~/components/common/user-menu.vue';
+  import UserMenu from '~/components/common/userMenu.vue';
 
+  const { profile, fetchUserProfile } = useUserProfile();
+
+  onMounted(() => {
+    if (!profile.value) {
+      fetchUserProfile();
+    }
+  });
+
+  const user = computed(() => profile.value ?? null);
+
+  const routes = useRoutes();
   const route = useRoute();
+
+  const logout = async () => {
+    const toast = useToast();
+    const authService = useAuth();
+    const { error } = await authService.signOut();
+
+    if (error !== null) {
+      toast.add({
+        title: 'Uh oh! Something went wrong.',
+        description: "There was a problem when you've tried to do logout.",
+        icon: 'i-lucide-log-out',
+      });
+      return;
+    }
+
+    toast.add({
+      title: 'Logout successful',
+      description: 'You have safely logged out of your account.',
+      icon: 'i-lucide-log-out',
+    });
+
+    navigateTo(routes.login());
+  };
 
   const items: NavigationMenuItem[][] = [
     [
@@ -79,7 +113,7 @@
       </template>
 
       <template #footer="{ collapsed }">
-        <UserMenu :collapsed="collapsed" />
+        <UserMenu :collapsed="collapsed" :user="user" :onLogout="logout" />
       </template>
     </UDashboardSidebar>
     <UDashboardPanel>
