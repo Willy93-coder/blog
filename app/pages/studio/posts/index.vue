@@ -1,7 +1,7 @@
 <script setup>
-definePageMeta({
-  layout: "studio",
-});
+  definePageMeta({
+    layout: 'studio',
+  });
 </script>
 
 <template>

@@ -2,17 +2,23 @@
   "name": "blog-app",
   "type": "module",
   "private": true,
+  "packageManager": "pnpm@10.13.1",
+  "engines": {
+    "node": "24.3.0"
+  },
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "test": "vitest",
+    "test:ci": "vitest run --coverage",
     "test:unit": "vitest --project unit",
     "test:nuxt": "vitest --project nuxt",
+    "test:integration": "vitest --project integration",
     "test:watch": "vitest --watch"
   },
   "dependencies": {
@@ -28,10 +34,12 @@
     "zod": "^4.2.1"
   },
   "devDependencies": {
-    "prettier": "^3.7.4",
     "@nuxt/test-utils": "^3.21.0",
     "@nuxtjs/tailwindcss": "^6.14.0",
+    "@vitest/coverage-v8": "4.0.17",
     "@vue/test-utils": "^2.4.6",
-    "vitest": "^4.0.16"
+    "happy-dom": "^20.1.0",
+    "prettier": "^3.7.4",
+    "vitest": "^4.0.17"
   }
 }
