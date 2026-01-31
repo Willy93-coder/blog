@@ -4,9 +4,14 @@ import type { PostAction, PostActionType, Post } from '~/posts/types';
 import { reactive, ref, computed } from 'vue';
 import { createPost, publishPost, unpublishPost, updatePost } from './actions';
 
-function getPostActions(post: Partial<Post>): PostAction[] {
+function getAreChanges(postA: Partial<Post>, postB: Partial<Post>): boolean {
+  return postA.title !== postB.title;
+}
+
+function getPostActions(post: Partial<Post>, areChanges: boolean): PostAction[] {
   const list: PostAction[] = [];
-  if (post.id) {
+
+  if (post.id && !areChanges) {
     if (post.published) {
       list.push({
         type: 'unpublish',
@@ -24,6 +29,14 @@ function getPostActions(post: Partial<Post>): PostAction[] {
     }
   }
 
+  if (!post.id || areChanges) {
+    list.push({
+      type: 'cancel',
+      label: 'Cancel',
+      icon: 'i-lucide-x',
+      color: 'neutral',
+    });
+  }
   list.push({
     type: 'save',
     label: 'Save',
@@ -75,8 +88,10 @@ export const usePostFormStore = defineStore('post-form', () => {
 
   let successCallback: ((updatedPost: Post, action: PostActionType) => void) | null = null;
   let errorCallback: ((error: string, action: PostActionType) => void) | null = null;
+  let cancelCallback: (() => void) | null = null;
 
-  const actions = computed<PostAction[]>(() => getPostActions(originalPost));
+  const areChanges = computed<boolean>(() => getAreChanges(form, originalPost));
+  const actions = computed<PostAction[]>(() => getPostActions(originalPost, areChanges.value));
 
   function init(initial?: Partial<Post>) {
     form.title = initial?.title ?? '';
@@ -93,6 +108,10 @@ export const usePostFormStore = defineStore('post-form', () => {
     errorCallback = cb;
   }
 
+  function onCancel(cb: () => void) {
+    cancelCallback = cb;
+  }
+
   async function submit(action: PostActionType) {
     if (uiState.value.status === 'submitting') return;
 
@@ -100,6 +119,13 @@ export const usePostFormStore = defineStore('post-form', () => {
       status: 'submitting',
       action,
     };
+
+    if (action === 'cancel') {
+      init(originalPost);
+      cancelCallback?.();
+      uiState.value = { status: 'ready' };
+      return;
+    }
 
     try {
       const result = postFormSchema.safeParse(form);
@@ -131,7 +157,6 @@ export const usePostFormStore = defineStore('post-form', () => {
       }
 
       uiState.value = { status: 'ready' };
-      successCallback?.(form as Post, action);
     } catch (e: any) {
       if (e.message === 'Title already exists') {
         uiState.value = {
@@ -155,13 +180,14 @@ export const usePostFormStore = defineStore('post-form', () => {
   }
 
   return {
+    actions,
     form,
     originalPost,
-    actions,
     uiState,
     init,
-    submit,
-    onSuccess,
+    onCancel,
     onError,
+    onSuccess,
+    submit,
   };
 });

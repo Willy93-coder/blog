@@ -15,6 +15,7 @@ export const PostAction = {
   Save: 'save',
   Publish: 'publish',
   Unpublish: 'unpublish',
+  Cancel: 'cancel',
 } as const;
 
 export type PostActionType = (typeof PostAction)[keyof typeof PostAction];

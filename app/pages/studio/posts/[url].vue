@@ -39,6 +39,10 @@
   postFormStore.onError((error: string, action: PostActionType) => {
     toast.add({ title: `Error: ${error}`, color: 'error' });
   });
+
+  postFormStore.onCancel(() => {
+    if (isNew) navigateTo('/studio/posts');
+  });
 </script>
 
 <template>
