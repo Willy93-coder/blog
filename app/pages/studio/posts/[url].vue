@@ -9,6 +9,7 @@
   const route = useRoute();
   const isNew = route.params.url === 'new';
 
+  // For demo purposes, use mock data - update to fetch real data from post actions
   const post = isNew
     ? undefined
     : {

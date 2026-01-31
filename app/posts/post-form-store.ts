@@ -33,6 +33,7 @@ function getPostActions(post: Partial<Post>): PostAction[] {
 
   return list;
 }
+
 export const State = {
   Idle: 'idle',
   Ready: 'ready',
