@@ -4,14 +4,14 @@ import type { PostAction, PostActionType, Post } from '~/posts/types';
 import { reactive, ref, computed } from 'vue';
 import { createPost, publishPost, unpublishPost, updatePost } from './actions';
 
-function getAreChanges(postA: Partial<Post>, postB: Partial<Post>): boolean {
+function getHasChanges(postA: Partial<Post>, postB: Partial<Post>): boolean {
   return postA.title !== postB.title;
 }
 
-function getPostActions(post: Partial<Post>, areChanges: boolean): PostAction[] {
+function getPostActions(post: Partial<Post>, hasChanges: boolean): PostAction[] {
   const list: PostAction[] = [];
 
-  if (post.id && !areChanges) {
+  if (post.id && !hasChanges) {
     if (post.published) {
       list.push({
         type: 'unpublish',
@@ -29,7 +29,7 @@ function getPostActions(post: Partial<Post>, areChanges: boolean): PostAction[] 
     }
   }
 
-  if (!post.id || areChanges) {
+  if (!post.id || hasChanges) {
     list.push({
       type: 'cancel',
       label: 'Cancel',
@@ -90,8 +90,8 @@ export const usePostFormStore = defineStore('post-form', () => {
   let errorCallback: ((error: string, action: PostActionType) => void) | null = null;
   let cancelCallback: (() => void) | null = null;
 
-  const areChanges = computed<boolean>(() => getAreChanges(form, originalPost));
-  const actions = computed<PostAction[]>(() => getPostActions(originalPost, areChanges.value));
+  const hasChanges = computed<boolean>(() => getHasChanges(form, originalPost));
+  const actions = computed<PostAction[]>(() => getPostActions(originalPost, hasChanges.value));
 
   function init(initial?: Partial<Post>) {
     form.title = initial?.title ?? '';
