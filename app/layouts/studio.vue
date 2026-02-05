@@ -1,8 +1,9 @@
 <script setup lang="ts">
   import type { NavigationMenuItem } from '@nuxt/ui';
-  import UserMenu from '~/components/common/userMenu.vue';
+  import UserMenu from '~/components/common/UserMenu.vue';
+  import StudioPageSkeleton from '~/components/skeletons/StudioPageSkeleton.vue';
 
-  const { profile, fetchUserProfile } = useUserProfile();
+  const { profile, fetchUserProfile, loading } = useUserProfile();
 
   onMounted(() => {
     if (!profile.value) {
@@ -43,23 +44,23 @@
       {
         label: 'Posts',
         icon: 'i-lucide-newspaper',
-        to: '/studio/posts',
+        to: routes.studioPosts(),
         defaultOpen: true,
         children: [
           {
             label: 'All Posts',
-            to: '/studio/posts',
+            to: routes.studioPosts(),
           },
           {
             label: 'Add New',
-            to: '/studio/posts/new',
+            to: routes.studioPostsNew(),
           },
         ],
       },
       {
         label: 'Tags',
         icon: 'i-lucide-tag',
-        to: '/studio/tags',
+        to: routes.studioTags(),
       },
     ],
     [
@@ -113,7 +114,7 @@
       </template>
 
       <template #footer="{ collapsed }">
-        <UserMenu :collapsed="collapsed" :user="user" :onLogout="logout" />
+        <UserMenu :collapsed="collapsed" :user="user" :onLogout="logout" :loading="loading" />
       </template>
     </UDashboardSidebar>
     <UDashboardPanel>
@@ -133,7 +134,8 @@
       </template>
       <template #body>
         <div class="border-2 border-dashed border-default rounded-md p-4 flex-1">
-          <slot />
+          <StudioPageSkeleton v-if="loading" />
+          <slot v-else />
         </div>
       </template>
     </UDashboardPanel>

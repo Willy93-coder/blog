@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { computed, toRefs } from 'vue';
   import type { DropdownMenuItem } from '@nuxt/ui';
+  import UserMenuSkeleton from '../skeletons/UserMenuSkeleton.vue';
 
   const props = defineProps<{
     collapsed?: boolean;
@@ -10,6 +11,7 @@
       full_name: string;
     } | null;
     onLogout: () => void | Promise<void>;
+    loading: boolean;
   }>();
 
   const { collapsed, user, onLogout } = toRefs(props);
@@ -77,8 +79,8 @@
       {
         label: 'Log out',
         icon: 'i-lucide-log-out',
-        onSelect() {
-          onLogout.value();
+        async onSelect() {
+          await onLogout.value();
         },
       },
     ],
@@ -86,12 +88,14 @@
 </script>
 
 <template>
+  <UserMenuSkeleton v-if="loading" />
   <UDropdownMenu
     :items="items"
     :content="{ align: 'center', collisionPadding: 12 }"
     :ui="{
       content: collapsed ? 'w-48' : 'w-(--reka-dropdown-menu-trigger-width)',
     }"
+    v-else
   >
     <UButton
       v-bind="{
