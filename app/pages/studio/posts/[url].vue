@@ -1,7 +1,7 @@
 <script setup lang="ts">
-  import PostForm from '~/components/posts/post-form.vue';
-  import { usePostFormStore } from '~/posts/post-form-store';
-  import type { Post, PostActionType } from '~/posts/types';
+  import PostForm from '~/components/posts/PostForm.vue';
+  import { usePostFormStore } from '~/stores/postFormStore';
+  import type { Post, PostActionType } from '~/types/post';
 
   definePageMeta({ layout: 'studio' });
 
@@ -46,7 +46,7 @@
 </script>
 
 <template>
-  <Upage>
+  <UPage>
     <PostForm />
-  </Upage>
+  </UPage>
 </template>

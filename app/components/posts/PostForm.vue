@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import type { PostActionType } from '~/posts/types';
-  import { usePostFormStore } from '~/posts/post-form-store';
+  import type { PostActionType } from '~/types/post';
+  import { usePostFormStore } from '~/stores/postFormStore';
 
   const postFormStore = usePostFormStore();
   const selectedAction = ref<PostActionType | null>(null);

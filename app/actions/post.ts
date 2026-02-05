@@ -1,5 +1,4 @@
-import type { CreatePostForm, UpdatePostForm } from './schemas';
-import type { Post } from './types';
+import type { Post, CreatePostForm, UpdatePostForm } from '~/types/post';
 
 export function createPost(post: CreatePostForm): Promise<Post> {
   return Promise.resolve({} as Post);

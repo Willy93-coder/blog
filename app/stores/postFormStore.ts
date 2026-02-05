@@ -1,8 +1,8 @@
-import { defineStore } from 'pinia';
-import { postFormSchema, type PostForm } from '~/posts/schemas';
-import type { PostAction, PostActionType, Post } from '~/posts/types';
 import { reactive, ref, computed } from 'vue';
-import { createPost, publishPost, unpublishPost, updatePost } from './actions';
+import { defineStore } from 'pinia';
+
+import { postFormSchema, PostAction, type PostActionType, type Post, type PostForm } from '~/types/post';
+import { createPost, publishPost, unpublishPost, updatePost } from '~/actions/post';
 
 function getHasChanges(postA: Partial<Post>, postB: Partial<Post>): boolean {
   return postA.title !== postB.title;
@@ -156,6 +156,7 @@ export const usePostFormStore = defineStore('post-form', () => {
           break;
       }
 
+      successCallback?.(result.data as Post, action);
       uiState.value = { status: 'ready' };
     } catch (e: any) {
       if (e.message === 'Title already exists') {
