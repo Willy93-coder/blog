@@ -44,5 +44,17 @@
         </UButton>
       </div>
     </div>
+    <UFormField
+      :error="postFormStore.uiState.status === 'error' && postFormStore.uiState.errors?.subtitle"
+      class="flex-1"
+    >
+      <UTextarea
+        v-model="postFormStore.form.subtitle"
+        class="w-full"
+        placeholder="Subtitle (optional)"
+        :disabled="postFormStore.uiState.status === 'submitting'"
+        :rows="6"
+      />
+    </UFormField>
   </UForm>
 </template>

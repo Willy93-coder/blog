@@ -5,7 +5,7 @@ import { postFormSchema, PostAction, type PostActionType, type Post, type PostFo
 import { createPost, publishPost, unpublishPost, updatePost } from '~/actions/post';
 
 function getHasChanges(postA: Partial<Post>, postB: Partial<Post>): boolean {
-  return postA.title !== postB.title;
+  return postA.title !== postB.title || postA.subtitle !== postB.subtitle;
 }
 
 function getPostActions(post: Partial<Post>, hasChanges: boolean): PostAction[] {
@@ -79,7 +79,7 @@ type ErrorState<T> = {
 type UiState<T> = IdleState | ReadyState | SubmittingState | ErrorState<T>;
 
 export const usePostFormStore = defineStore('post-form', () => {
-  const form = reactive<PostForm>({ title: '' });
+  const form = reactive<PostForm>({ title: '', subtitle: '' });
   const originalPost = reactive<Partial<Post>>({});
 
   const uiState = ref<UiState<PostForm>>({
@@ -95,6 +95,7 @@ export const usePostFormStore = defineStore('post-form', () => {
 
   function init(initial?: Partial<Post>) {
     form.title = initial?.title ?? '';
+    form.subtitle = initial?.subtitle ?? '';
     Object.assign(originalPost, initial ?? {});
 
     uiState.value = { status: 'ready' };

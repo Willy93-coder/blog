@@ -3,6 +3,7 @@ import z from 'zod';
 
 export const postFormSchema = z.object({
   title: z.string().min(1, 'Title is required'),
+  subtitle: z.string().optional(),
   id: z.string().optional(),
 });
 
