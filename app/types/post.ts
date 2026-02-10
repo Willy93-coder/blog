@@ -4,6 +4,7 @@ import z from 'zod';
 export const postFormSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   id: z.string().optional(),
+  content: z.string().optional(),
 });
 
 export type PostForm = z.infer<typeof postFormSchema>;

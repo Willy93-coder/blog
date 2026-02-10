@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import type { PostActionType } from '~/types/post';
   import { usePostFormStore } from '~/stores/postFormStore';
+  import RichTextEditor from '../common/RichTextEditor.vue';
 
   const postFormStore = usePostFormStore();
   const selectedAction = ref<PostActionType | null>(null);
@@ -43,6 +44,13 @@
           {{ action.label }}
         </UButton>
       </div>
+    </div>
+    <div>
+      <RichTextEditor
+        v-model="postFormStore.form.content"
+        :disabled="postFormStore.uiState.status === 'submitting'"
+        placeholder="Start writing your post..."
+      />
     </div>
   </UForm>
 </template>
