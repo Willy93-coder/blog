@@ -7,22 +7,46 @@
 
   const toast = useToast();
   const route = useRoute();
-  const isNew = route.params.url === 'new';
+  const postActions = usePosts();
 
-  // For demo purposes, use mock data - update to fetch real data from post actions
-  const post = isNew
-    ? undefined
-    : {
-        id: '1',
-        title: 'Sample Post Title',
-        content: 'Sample content',
-        published: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+  const isNew = route.params.url === 'new';
+  const post = ref<Post | null>(null);
+  const isLoading = ref(!isNew);
+
+  const fetchPost = async () => {
+    if (isNew) {
+      isLoading.value = false;
+      return;
+    }
+
+    try {
+      const { data, error } = await postActions.getPostById({ id: route.params.url as string });
+      if (error !== null) {
+        toast.add({ title: 'Error', description: 'Error to get post. Please try again', color: 'error' });
+        post.value = null;
+        return;
+      }
+      post.value = data;
+    } catch (err) {
+      post.value = null;
+      toast.add({ title: 'Error', description: 'Error to get the post. Please try again', color: 'error' });
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
+  onMounted(fetchPost);
 
   const postFormStore = usePostFormStore();
-  postFormStore.init(post);
+
+  watch(
+    post,
+    (newPost) => {
+      console.warn('init post form store with', newPost);
+      postFormStore.init(newPost ?? undefined);
+    },
+    { immediate: true },
+  );
 
   postFormStore.onSuccess((updatedPost: Post, action: PostActionType) => {
     let title = 'Post saved successfully';
@@ -32,7 +56,10 @@
     toast.add({ title, color: 'success' });
 
     if (action === 'save') {
-      // redirect to new post URL (check if the updated post has different url before redirecting)
+      if (isNew) navigateTo(`/studio/posts/${updatedPost.id}`);
+    } else {
+      console.warn('update post with', updatedPost);
+      post.value = updatedPost;
     }
   });
 
@@ -47,6 +74,9 @@
 
 <template>
   <UPage>
-    <PostForm />
+    <div v-if="isLoading" class="flex justify-center items-center min-h-50">
+      <div>Loading post...</div>
+    </div>
+    <PostForm v-else />
   </UPage>
 </template>
