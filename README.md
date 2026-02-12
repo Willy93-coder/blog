@@ -20,6 +20,26 @@ yarn install
 bun install
 ```
 
+## Supabase Configuration
+
+### Generate TypeScript Types
+
+To generate the `app/types/supabase.ts` file with your database types, you need to have the Supabase CLI installed:
+
+```bash
+# Install Supabase CLI
+npm install -g supabase
+
+# Generate types from your Supabase project
+supabase gen types typescript --project-id YOUR_PROJECT_ID > app/types/supabase.ts
+```
+
+Alternatively, you can use the Supabase CLI with your project URL:
+
+```bash
+supabase gen types typescript --db-url YOUR_DATABASE_URL > app/types/supabase.ts
+```
+
 ## Development Server
 
 Start the development server on `http://localhost:3000`:
