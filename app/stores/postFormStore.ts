@@ -2,10 +2,10 @@ import { reactive, ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 
 import { postFormSchema, PostAction, type PostActionType, type Post, type PostForm } from '~/types/post';
-import { createPost, publishPost, unpublishPost, updatePost } from '~/actions/post';
+import type { ActionResult } from '~/types/result';
 
 function getHasChanges(postA: Partial<Post>, postB: Partial<Post>): boolean {
-  return postA.title !== postB.title;
+  return postA.title !== postB.title || postA.subtitle !== postB.subtitle || postA.content !== postB.content;
 }
 
 function getPostActions(post: Partial<Post>, hasChanges: boolean): PostAction[] {
@@ -79,8 +79,9 @@ type ErrorState<T> = {
 type UiState<T> = IdleState | ReadyState | SubmittingState | ErrorState<T>;
 
 export const usePostFormStore = defineStore('post-form', () => {
-  const form = reactive<PostForm>({ title: '' });
+  const form = reactive<PostForm>({ title: '', subtitle: '', content: '' });
   const originalPost = reactive<Partial<Post>>({});
+  const postActions = usePosts();
 
   const uiState = ref<UiState<PostForm>>({
     status: 'idle',
@@ -94,7 +95,7 @@ export const usePostFormStore = defineStore('post-form', () => {
   const actions = computed<PostAction[]>(() => getPostActions(originalPost, hasChanges.value));
 
   function init(initial?: Partial<Post>) {
-    form.title = initial?.title ?? '';
+    Object.assign(form, initial ?? {});
     Object.assign(originalPost, initial ?? {});
 
     uiState.value = { status: 'ready' };
@@ -143,20 +144,32 @@ export const usePostFormStore = defineStore('post-form', () => {
         return;
       }
 
+      let savePromise: Promise<ActionResult> | undefined = undefined;
+
       switch (action) {
         case 'save':
-          if (form.id) updatePost({ ...form, id: form.id });
-          else createPost(form);
+          if (form.id) savePromise = postActions.updatePost({ ...form, id: form.id });
+          else savePromise = postActions.createPost(form);
           break;
         case 'publish':
-          if (originalPost.id) publishPost(originalPost.id);
+          if (originalPost.id) savePromise = postActions.publishPostById({ id: originalPost.id });
           break;
         case 'unpublish':
-          if (originalPost.id) unpublishPost(originalPost.id);
+          if (originalPost.id) savePromise = postActions.unpublishPostById({ id: originalPost.id });
           break;
       }
 
-      successCallback?.(result.data as Post, action);
+      if (!savePromise) {
+        throw new Error('Invalid action');
+      }
+
+      const { data, error } = await savePromise;
+
+      if (error) {
+        throw new Error(error);
+      }
+
+      successCallback?.(data as Post, action);
       uiState.value = { status: 'ready' };
     } catch (e: any) {
       if (e.message === 'Title already exists') {
