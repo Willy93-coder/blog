@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import PostForm from '~/components/posts/PostForm.vue';
+  import PostFormSkeleton from '~/components/skeletons/PostFormSkeleton.vue';
   import { usePostFormStore } from '~/stores/postFormStore';
   import type { Post, PostActionType } from '~/types/post';
 
@@ -74,9 +75,7 @@
 
 <template>
   <UPage>
-    <div v-if="isLoading" class="flex justify-center items-center min-h-50">
-      <div>Loading post...</div>
-    </div>
+    <PostFormSkeleton v-if="isLoading" />
     <PostForm v-else />
   </UPage>
 </template>
