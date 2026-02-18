@@ -1,27 +1,21 @@
 import type { ButtonProps } from '@nuxt/ui';
+import type { Tables, TablesInsert, TablesUpdate } from './supabase';
 import z from 'zod';
+
+export type Post = Tables<'post'>;
+export type CreatePostInput = TablesInsert<'post'>;
+export type UpdatePostInput = TablesUpdate<'post'>;
+export type DeletePostInput = Pick<Post, 'id'>;
+export type PostIdInput = Pick<Post, 'id'>;
 
 export const postFormSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   subtitle: z.string().optional(),
+  content: z.string().min(1, 'Content is required'),
   id: z.string().optional(),
 });
 
 export type PostForm = z.infer<typeof postFormSchema>;
-
-export type CreatePostForm = Omit<PostForm, 'id'>;
-export type UpdatePostForm = PostForm & { id: string };
-
-export type Post = {
-  id: string;
-  title: string;
-  subtitle?: string;
-  content: string;
-  published: boolean;
-  publishedAt?: Date;
-  updatedAt: Date;
-  createdAt: Date;
-};
 
 export const PostAction = {
   Save: 'save',
