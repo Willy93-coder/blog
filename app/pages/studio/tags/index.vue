@@ -48,6 +48,16 @@
       toast.add({ title: 'Error', description: 'Error deleting tags. Please try again', color: 'error' });
     }
   };
+
+  const onUpdateTag = async (id: string, name: string) => {
+    const result = await tagFunctions.updateTag({ id, name });
+    if (result.error === null) {
+      await fetchTags();
+      toast.add({ title: 'Success', description: 'Tag updated successfully.', color: 'success' });
+    } else {
+      toast.add({ title: 'Error', description: 'Error updating tag. Please try again', color: 'error' });
+    }
+  };
 </script>
 
 <template>
@@ -57,6 +67,6 @@
       <p class="text-sm text-muted mt-1">Manage the tags used across your blog posts.</p>
     </div>
     <TagForm :callback="onCreateTag" />
-    <TagTable :tagList="tagList" @delete="onDeleteTags" />
+    <TagTable :tagList="tagList" @delete="onDeleteTags" @update="onUpdateTag" />
   </div>
 </template>
