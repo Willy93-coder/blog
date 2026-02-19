@@ -58,11 +58,26 @@
 </script>
 
 <template>
-  <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Create Tag</h3>
-  <UForm :schema="tagSchema" :state="formState" @submit="onSubmit">
-    <UFormField label="Tag" name="name" required class="mb-2">
-      <UInput v-model="formState.name" :disabled="uiState.loading" placeholder="Enter tag" />
-    </UFormField>
-    <UButton type="submit" :loading="uiState.loading">Create</UButton>
-  </UForm>
+  <div class="border border-accented rounded-lg overflow-hidden">
+    <div class="px-4 py-3 border-b border-accented">
+      <h3 class="text-sm font-semibold">New Tag</h3>
+    </div>
+    <div class="p-4">
+      <UForm :schema="tagSchema" :state="formState" @submit="onSubmit">
+        <div class="flex items-start gap-3">
+          <UFormField name="name" class="flex-1">
+            <UInput
+              v-model="formState.name"
+              :disabled="uiState.loading"
+              placeholder="Tag name..."
+              class="w-full"
+            />
+          </UFormField>
+          <UButton type="submit" :loading="uiState.loading" icon="i-lucide-plus">
+            Create
+          </UButton>
+        </div>
+      </UForm>
+    </div>
+  </div>
 </template>

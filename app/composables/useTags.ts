@@ -29,6 +29,10 @@ const useTags = () => {
       const { error } = await $supabase.from('tag').delete().eq('id', id);
       return { error: toErrorMessage(error) };
     },
+    deleteTags: async (ids: string[]): Promise<ActionResult> => {
+      const { error } = await $supabase.from('tag').delete().in('id', ids);
+      return { error: toErrorMessage(error) };
+    },
   };
 };
 

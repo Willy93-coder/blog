@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { ref } from 'vue';
-  import TagBadge from '~/components/tags/TagBadge.vue';
   import TagForm from '~/components/tags/TagForm.vue';
+  import TagTable from '~/components/tags/TagTable.vue';
   import { useTags } from '~/composables/useTags';
   import type { ActionResult } from '~/types/result';
   import type { CreateTagInput, Tag } from '~/types/tag';
@@ -39,15 +39,24 @@
     }
     return result;
   };
+
+  const onDeleteTags = async (ids: string[]) => {
+    const result = await tagFunctions.deleteTags(ids);
+    if (result.error === null) {
+      await fetchTags();
+    } else {
+      toast.add({ title: 'Error', description: 'Error deleting tags. Please try again', color: 'error' });
+    }
+  };
 </script>
 
 <template>
-  <div class="mb-4">
+  <div class="space-y-6">
+    <div>
+      <h1 class="text-2xl font-bold">Tags</h1>
+      <p class="text-sm text-muted mt-1">Manage the tags used across your blog posts.</p>
+    </div>
     <TagForm :callback="onCreateTag" />
-  </div>
-  <USeparator />
-  <p v-if="tagList.length === 0" class="mt-4 text-sm text-gray-500">No tags</p>
-  <div v-else class="mt-4 flex flex-wrap gap-2">
-    <TagBadge v-for="tag in tagList" :key="tag.name" :tag="tag.name" />
+    <TagTable :tagList="tagList" @delete="onDeleteTags" />
   </div>
 </template>
