@@ -13,7 +13,6 @@ export const postFormSchema = z.object({
   subtitle: z.string().optional(),
   content: z.string().min(1, 'Content is required'),
   id: z.string().optional(),
-  content: z.string().optional(),
 });
 
 export type PostForm = z.infer<typeof postFormSchema>;
