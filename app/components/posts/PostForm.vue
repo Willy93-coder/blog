@@ -45,12 +45,22 @@
         </UButton>
       </div>
     </div>
-    <div>
-      <RichTextEditor
-        v-model="postFormStore.form.content"
+    <UFormField
+      :error="postFormStore.uiState.status === 'error' && postFormStore.uiState.errors?.subtitle"
+      class="flex-1"
+    >
+      <UTextarea
+        v-model="postFormStore.form.subtitle"
+        class="w-full"
+        placeholder="Subtitle (optional)"
         :disabled="postFormStore.uiState.status === 'submitting'"
-        placeholder="Start writing your post..."
+        :rows="6"
       />
-    </div>
+    </UFormField>
+    <RichTextEditor
+      v-model="postFormStore.form.content"
+      :disabled="postFormStore.uiState.status === 'submitting'"
+      placeholder="Start writing your post..."
+    />
   </UForm>
 </template>
