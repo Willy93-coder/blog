@@ -1,7 +1,7 @@
 import { useNuxtApp } from '#app';
 import type { PostgrestError } from '@supabase/supabase-js';
 import type { ActionResult, QueryResult } from '~/types/result';
-import type { CreatePostInput, DeletePostInput, Post, PostIdInput, UpdatePostInput } from '~/types/post';
+import type { CreatePostInput, DeletePostInput, Post, PostIdInput, PostWithTags, UpdatePostInput } from '~/types/post';
 
 const toErrorMessage = (error: PostgrestError | null) => error?.message ?? null;
 
@@ -77,6 +77,18 @@ const usePosts = () => {
       const { error } = await $supabase.from('post').delete().eq('id', id);
 
       return { error: toErrorMessage(error) };
+    },
+    deletePosts: async (ids: string[]): Promise<ActionResult> => {
+      const { error } = await $supabase.from('post').delete().in('id', ids);
+      return { error: toErrorMessage(error) };
+    },
+    getPostsWithTags: async (): Promise<QueryResult<PostWithTags[]>> => {
+      const { data, error } = await $supabase
+        .from('post')
+        .select('*, post_tag(tag(id, name))')
+        .order('created_at', { ascending: false });
+
+      return { data: (data ?? []) as PostWithTags[], error: toErrorMessage(error) };
     },
   };
 };
