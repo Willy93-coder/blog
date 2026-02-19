@@ -4,5 +4,4 @@
     layout: 'blog',
   });
 </script>
-
 <template></template>
