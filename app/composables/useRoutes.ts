@@ -11,6 +11,7 @@ const useRoutes = () => {
     // Posts
     studioPosts: () => join(studio(), 'posts'),
     studioPostsNew: () => join(studio(), 'posts', 'new'),
+    studioPostEdit: (id: string) => join(studio(), 'posts', id),
 
     // Tags
     studioTags: () => join(studio(), 'tags'),
