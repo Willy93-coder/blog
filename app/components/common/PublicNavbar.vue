@@ -35,7 +35,7 @@
           v-for="link in navLinks"
           :key="link.url"
           :to="link.url"
-          class="flex items-center gap-1.5 text-sm font-medium text-zinc-500 underline-offset-4 transition-colors hover:text-zinc-900 hover:underline dark:text-zinc-400 dark:hover:text-zinc-100"
+          class="flex items-center gap-1.5 text-sm font-medium text-zinc-500 underline-offset-4 transition-colors hover:text-primary dark:text-zinc-400 dark:hover:text-primary"
           active-class="text-zinc-900 underline dark:text-zinc-100"
         >
           <UIcon v-if="link.icon" :name="link.icon" class="size-3.5" />
@@ -46,7 +46,7 @@
         <button
           @click="toggleColorMode"
           :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-          class="rounded-md p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+          class="cursor-pointer rounded-md p-1.5 text-zinc-500 transition-colors hover:text-primary dark:text-zinc-400 dark:hover:text-primary"
         >
           <UIcon :name="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="size-4" />
         </button>
@@ -57,7 +57,7 @@
         <button
           @click="toggleColorMode"
           :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-          class="rounded-md p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+          class="cursor-pointer rounded-md p-1.5 text-zinc-500 transition-colors hover:text-primary dark:text-zinc-400 dark:hover:text-primary"
         >
           <UIcon :name="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="size-4" />
         </button>
@@ -66,7 +66,7 @@
           @click="isMenuOpen = !isMenuOpen"
           :aria-expanded="isMenuOpen"
           aria-label="Toggle menu"
-          class="rounded-md p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+          class="rounded-md p-1.5 text-zinc-500 transition-colors hover:text-primary dark:text-zinc-400 dark:hover:text-primary"
         >
           <UIcon :name="isMenuOpen ? 'i-lucide-x' : 'i-lucide-menu'" class="size-5" />
         </button>
@@ -79,7 +79,7 @@
         <li v-for="link in navLinks" :key="link.url">
           <NuxtLink
             :to="link.url"
-            class="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+            class="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:text-primary dark:text-zinc-400 dark:hover:text-primary"
             active-class="bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
             @click="isMenuOpen = false"
           >
