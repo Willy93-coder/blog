@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import type { PostWithTags } from '~/types/post';
   import TagBadge from '../tags/TagBadge.vue';
+  import Breadcrumb from '~/components/common/Breadcrumb.vue';
 
   const props = defineProps<{
     post: PostWithTags;
@@ -20,6 +21,7 @@
 
 <template>
   <article class="mx-auto max-w-3xl px-4 py-12">
+    <Breadcrumb :items="[{ label: 'Home', to: '/' }, { label: 'Posts', to: '/posts' }, { label: post.title }]" />
     <!-- Header -->
     <header class="mb-8">
       <h1 class="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-4xl">
