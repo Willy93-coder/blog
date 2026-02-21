@@ -21,7 +21,7 @@
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-4xl mb-2">Blog</h1>
+  <h1 class="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-4xl mb-2 mt-4">Blog</h1>
   <p class="text-zinc-500 dark:text-zinc-400 mb-10">Articles about web development, code and other things.</p>
 
   <USeparator class="mb-10" />

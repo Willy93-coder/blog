@@ -7,7 +7,7 @@
   <div class="flex min-h-screen flex-col">
     <PublicNavbar />
     <main class="flex-1">
-      <section class="mx-auto max-w-3xl px-4 py-12">
+      <section class="mx-auto max-w-3xl px-4 py-8">
         <slot />
       </section>
     </main>

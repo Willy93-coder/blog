@@ -10,7 +10,7 @@
 </script>
 
 <template>
-  <nav class="mb-6 flex items-center gap-1 text-sm text-zinc-500 dark:text-zinc-400">
+  <nav class="flex items-center gap-1 text-sm text-zinc-500 dark:text-zinc-400">
     <template v-for="(item, index) in items" :key="index">
       <span v-if="index > 0" class="mx-1">»</span>
       <NuxtLink v-if="item.to" :to="item.to" class="transition-colors hover:text-primary">

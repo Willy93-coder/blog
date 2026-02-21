@@ -45,7 +45,7 @@
 </script>
 
 <template>
-  <div class="flex min-h-full flex-col mx-auto max-w-3xl px-4 py-10 flex-1">
+  <div class="flex min-h-full flex-col mx-auto max-w-3xl flex-1 gap-2">
     <Breadcrumb
       v-if="tagName"
       :items="[{ label: 'Home', to: '/' }, { label: 'Posts', to: '/posts' }, { label: `#${tagName}` }]"
