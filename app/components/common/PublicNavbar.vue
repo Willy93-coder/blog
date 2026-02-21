@@ -8,11 +8,12 @@
   };
 
   const isMenuOpen = ref(false);
+  const routes = useRoutes();
 
   const navLinks: PublicNavbar[] = [
-    { label: 'Posts', url: '/posts' },
-    { label: 'Tags', url: '/tags' },
-    { label: 'About', url: '/about' },
+    { label: 'Posts', url: routes.posts() },
+    { label: 'Tags', url: routes.tags() },
+    { label: 'About', url: routes.about() },
   ];
 </script>
 
@@ -23,7 +24,7 @@
     <nav class="mx-auto flex max-w-3xl items-center justify-between px-4 py-4">
       <!-- Logo -->
       <NuxtLink
-        to="/"
+        :to="routes.home()"
         class="font-mono text-lg font-bold tracking-tight text-zinc-900 transition-colors hover:text-zinc-500 dark:text-zinc-100 dark:hover:text-zinc-400"
       >
         My Blog

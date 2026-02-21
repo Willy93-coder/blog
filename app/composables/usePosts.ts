@@ -12,7 +12,7 @@ const usePosts = () => {
     getPosts: async (): Promise<QueryResult<Post[]>> => {
       const { data, error } = await $supabase.from('post').select().order('created_at', { ascending: false });
 
-      return { data: (data ?? []), error: toErrorMessage(error) };
+      return { data: data ?? [], error: toErrorMessage(error) };
     },
     getPostById: async ({ id }: PostIdInput): Promise<QueryResult<Post | null>> => {
       if (!id) {
@@ -32,12 +32,7 @@ const usePosts = () => {
         return { error: 'Post ID is required for update' };
       }
 
-      const { data, error } = await $supabase
-        .from('post')
-        .update(postInput)
-        .eq('id', postInput.id)
-        .select()
-        .single();
+      const { data, error } = await $supabase.from('post').update(postInput).eq('id', postInput.id).select().single();
 
       return { data, error: toErrorMessage(error) };
     },
@@ -82,11 +77,38 @@ const usePosts = () => {
       const { error } = await $supabase.from('post').delete().in('id', ids);
       return { error: toErrorMessage(error) };
     },
+    getPostWithTagsById: async ({ id }: PostIdInput): Promise<QueryResult<PostWithTags | null>> => {
+      if (!id) {
+        return { data: null, error: 'Post ID is required' };
+      }
+      const { data, error } = await $supabase.from('post').select('*, post_tag(tag(id, name))').eq('id', id).single();
+
+      return { data: data as PostWithTags | null, error: toErrorMessage(error) };
+    },
     getPostsWithTags: async (): Promise<QueryResult<PostWithTags[]>> => {
       const { data, error } = await $supabase
         .from('post')
         .select('*, post_tag(tag(id, name))')
         .order('created_at', { ascending: false });
+
+      return { data: (data ?? []) as PostWithTags[], error: toErrorMessage(error) };
+    },
+    getPublishedPostsWithTags: async (): Promise<QueryResult<PostWithTags[]>> => {
+      const { data, error } = await $supabase
+        .from('post')
+        .select('*, post_tag(tag(id, name))')
+        .eq('published', true)
+        .order('published_at', { ascending: false });
+
+      return { data: (data ?? []) as PostWithTags[], error: toErrorMessage(error) };
+    },
+    getLimitPublishedPostsWithTags: async ({ limit = 10 }: { limit: number }): Promise<QueryResult<PostWithTags[]>> => {
+      const { data, error } = await $supabase
+        .from('post')
+        .select('*, post_tag(tag(id, name))')
+        .eq('published', true)
+        .limit(limit)
+        .order('published_at', { ascending: false });
 
       return { data: (data ?? []) as PostWithTags[], error: toErrorMessage(error) };
     },

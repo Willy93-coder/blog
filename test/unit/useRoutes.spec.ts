@@ -20,6 +20,43 @@ describe('useRoutes', () => {
     expect(loginPath).toBe('/login');
   });
 
+  it('should return the posts route', () => {
+    // Arrange
+    const routes = useRoutes();
+    //Act
+    const postsPath = routes.posts();
+    //Assert
+    expect(postsPath).toBe('/posts');
+  });
+
+  it('should return the post id route', () => {
+    // Arrange
+    const routes = useRoutes();
+    const postId = '183921abe394';
+    // Act
+    const postIdPath = routes.post(postId);
+    // Assert
+    expect(postIdPath).toBe('/posts/183921abe394');
+  });
+
+  it('should return the tags route', () => {
+    // Arrange
+    const routes = useRoutes();
+    // Act
+    const tagsPath = routes.tags();
+    // Assert
+    expect(tagsPath).toBe('/tags');
+  });
+
+  it('should return the about route', () => {
+    // Arrange
+    const routes = useRoutes();
+    // Act
+    const aboutPath = routes.about();
+    // Assert
+    expect(aboutPath).toBe('/about');
+  });
+
   it('should return the studio route', () => {
     // Arrange
     const routes = useRoutes();

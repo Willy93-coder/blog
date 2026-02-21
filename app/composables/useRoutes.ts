@@ -3,17 +3,19 @@ const useRoutes = () => {
   const studio = () => '/studio';
 
   return {
+    // Public routes
     home: () => '/',
     login: () => '/login',
+    posts: () => join('posts'),
+    post: (id: string) => join('posts', id),
+    tags: () => join('tags'),
+    about: () => join('about'),
 
+    // Private routes
     studio,
-
-    // Posts
     studioPosts: () => join(studio(), 'posts'),
     studioPostsNew: () => join(studio(), 'posts', 'new'),
     studioPostEdit: (id: string) => join(studio(), 'posts', id),
-
-    // Tags
     studioTags: () => join(studio(), 'tags'),
   } as const;
 };
