@@ -2,8 +2,7 @@
   import type { PostWithTags } from '~/types/post';
   import PostLink from './PostLink.vue';
 
-  const { title, posts, fallbackText } = defineProps<{
-    title: string;
+  const { posts, fallbackText } = defineProps<{
     posts: PostWithTags[] | undefined;
     fallbackText?: string;
   }>();
