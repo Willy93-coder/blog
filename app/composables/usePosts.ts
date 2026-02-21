@@ -93,15 +93,6 @@ const usePosts = () => {
 
       return { data: (data ?? []) as PostWithTags[], error: toErrorMessage(error) };
     },
-    getPublishedPostsWithTags: async (): Promise<QueryResult<PostWithTags[]>> => {
-      const { data, error } = await $supabase
-        .from('post')
-        .select('*, post_tag(tag(id, name))')
-        .eq('published', true)
-        .order('published_at', { ascending: false });
-
-      return { data: (data ?? []) as PostWithTags[], error: toErrorMessage(error) };
-    },
     getLimitPublishedPostsWithTags: async ({ limit = 10 }: { limit: number }): Promise<QueryResult<PostWithTags[]>> => {
       const { data, error } = await $supabase
         .from('post')
@@ -111,6 +102,40 @@ const usePosts = () => {
         .order('published_at', { ascending: false });
 
       return { data: (data ?? []) as PostWithTags[], error: toErrorMessage(error) };
+    },
+    getPublishedPostsWithTags: async ({
+      page,
+      pageSize,
+      tagName,
+    }: {
+      page: number;
+      pageSize: number;
+      tagName?: string | null;
+    }): Promise<QueryResult<{ posts: PostWithTags[]; total: number }>> => {
+      const from = (page - 1) * pageSize;
+      const to = from + pageSize - 1;
+
+      const select = tagName
+        ? '*, post_tag!inner(tag!inner(id, name))'
+        : '*, post_tag(tag(id, name))';
+
+      let query = $supabase
+        .from('post')
+        .select(select, { count: 'exact' })
+        .eq('published', true);
+
+      if (tagName) {
+        query = query.eq('post_tag.tag.name', tagName);
+      }
+
+      const { data, error, count } = await query
+        .order('published_at', { ascending: false })
+        .range(from, to);
+
+      return {
+        data: { posts: (data ?? []) as PostWithTags[], total: count ?? 0 },
+        error: toErrorMessage(error),
+      };
     },
   };
 };
