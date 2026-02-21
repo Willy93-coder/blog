@@ -23,7 +23,7 @@
 </script>
 
 <template>
-  <div class="mx-auto max-w-3xl px-4 py-10">
+  <div class="flex min-h-full flex-col mx-auto max-w-3xl flex-1 gap-2">
     <Breadcrumb :items="[{ label: 'Home', to: '/' }, { label: 'Tags' }]" />
 
     <PageHeader title="Tags" subtitle="Browse posts by topic." />
