@@ -3,7 +3,6 @@
     modelValue?: string;
     disabled?: boolean;
     placeholder?: string;
-    class?: string;
   }
 
   interface Emits {
@@ -13,7 +12,6 @@
   const props = withDefaults(defineProps<Props>(), {
     disabled: false,
     placeholder: 'Start typing...',
-    class: 'w-full min-h-96 rounded-md border border-slate-700',
   });
 
   const emit = defineEmits<Emits>();
@@ -31,7 +29,7 @@
       v-model="content"
       content-type="markdown"
       :placeholder="placeholder"
-      :class="props.class"
+      class="w-full min-h-96"
       :editable="!props.disabled"
       :starter-kit="{
         link: {
@@ -79,8 +77,16 @@
             { kind: 'redo', icon: 'i-lucide-redo', tooltip: { text: 'Redo' } },
           ],
         ]"
-        class="border-b border-slate-700 px-2 py-2 flex flex-wrap gap-1"
+        class="border-b border-accented px-2 py-2 flex flex-wrap gap-1"
       />
     </UEditor>
   </div>
 </template>
+
+<style scoped>
+:deep(.ProseMirror) {
+  padding: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+</style>
