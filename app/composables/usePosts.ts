@@ -103,6 +103,22 @@ const usePosts = () => {
 
       return { data: (data ?? []) as PostWithTags[], error: toErrorMessage(error) };
     },
+    getTagsByPostId: async ({ id }: PostIdInput): Promise<QueryResult<{ id: string; name: string }[]>> => {
+      if (!id) {
+        return { data: [], error: 'Post ID is required' };
+      }
+      const { data, error } = await $supabase.from('post_tag').select('tag(id, name)').eq('post_id', id);
+      const tags = (data ?? []).map((row: any) => row.tag).filter(Boolean) as { id: string; name: string }[];
+      return { data: tags, error: toErrorMessage(error) };
+    },
+    addTagToPost: async ({ postId, tagId }: { postId: string; tagId: string }): Promise<ActionResult> => {
+      const { error } = await $supabase.from('post_tag').insert({ post_id: postId, tag_id: tagId });
+      return { error: toErrorMessage(error) };
+    },
+    removeTagFromPost: async ({ postId, tagId }: { postId: string; tagId: string }): Promise<ActionResult> => {
+      const { error } = await $supabase.from('post_tag').delete().eq('post_id', postId).eq('tag_id', tagId);
+      return { error: toErrorMessage(error) };
+    },
     getPublishedPostsWithTags: async ({
       page,
       pageSize,
