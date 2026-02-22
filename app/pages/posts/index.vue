@@ -45,17 +45,15 @@
 </script>
 
 <template>
-  <div class="flex min-h-full flex-col mx-auto max-w-3xl flex-1 gap-2">
-    <Breadcrumb
-      v-if="tagName"
-      :items="[{ label: 'Home', to: '/' }, { label: 'Posts', to: '/posts' }, { label: `#${tagName}` }]"
-    />
-    <Breadcrumb v-else :items="[{ label: 'Home', to: '/' }, { label: `Posts (Page ${page})` }]" />
+  <Breadcrumb
+    v-if="tagName"
+    :items="[{ label: 'Home', to: '/' }, { label: 'Posts', to: '/posts' }, { label: `#${tagName}` }]"
+  />
+  <Breadcrumb v-else :items="[{ label: 'Home', to: '/' }, { label: `Posts (Page ${page})` }]" />
 
-    <PageHeader title="Posts" :subtitle="tagName ? `Posts tagged #${tagName}.` : `All the articles I've posted.`" />
+  <PageHeader title="Posts" :subtitle="tagName ? `Posts tagged #${tagName}.` : `All the articles I've posted.`" />
 
-    <PostList :posts="posts ?? []" fallbackText="No posts published yet." />
+  <PostList :posts="posts ?? []" fallbackText="No posts published yet." />
 
-    <Pagination class="mt-auto pt-10" :page="page" :total-pages="totalPages" @change-page="changePage" />
-  </div>
+  <Pagination class="mt-auto pt-10" :page="page" :total-pages="totalPages" @change-page="changePage" />
 </template>
