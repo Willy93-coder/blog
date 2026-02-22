@@ -43,7 +43,6 @@
   watch(
     post,
     (newPost) => {
-      console.warn('init post form store with', newPost);
       postFormStore.init(newPost ?? undefined);
     },
     { immediate: true },
@@ -59,12 +58,11 @@
     if (action === 'save') {
       if (isNew) navigateTo(`/studio/posts/${updatedPost.id}`);
     } else {
-      console.warn('update post with', updatedPost);
       post.value = updatedPost;
     }
   });
 
-  postFormStore.onError((error: string, action: PostActionType) => {
+  postFormStore.onError((error: string) => {
     toast.add({ title: `Error: ${error}`, color: 'error' });
   });
 
@@ -74,8 +72,29 @@
 </script>
 
 <template>
-  <UPage>
+  <div class="space-y-6">
+    <div class="flex items-start justify-between">
+      <div>
+        <h1 class="text-2xl font-bold">{{ isNew ? 'New Post' : 'Edit Post' }}</h1>
+        <p class="text-sm text-muted mt-1">
+          {{ isNew ? 'Create a new blog post.' : 'Edit your blog post.' }}
+        </p>
+      </div>
+      <div v-if="!isLoading" class="flex items-center gap-2">
+        <UButton
+          v-for="action in postFormStore.actions"
+          :key="action.type"
+          :icon="action.icon"
+          :color="action.color"
+          :disabled="postFormStore.uiState.status === 'submitting'"
+          :loading="postFormStore.uiState.status === 'submitting' && postFormStore.uiState.action === action.type"
+          @click="postFormStore.submit(action.type)"
+        >
+          {{ action.label }}
+        </UButton>
+      </div>
+    </div>
     <PostFormSkeleton v-if="isLoading" />
     <PostForm v-else />
-  </UPage>
+  </div>
 </template>
