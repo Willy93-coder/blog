@@ -58,47 +58,55 @@ type Errors<T> = {
   [K in keyof T | 'general']?: string;
 };
 
-type IdleState = {
-  status: typeof State.Idle;
-};
-
-type ReadyState = {
-  status: typeof State.Ready;
-};
-
-type SubmittingState = {
-  status: typeof State.Submitting;
-  action: PostActionType;
-};
-
-type ErrorState<T> = {
-  status: typeof State.Error;
-  errors: Errors<T>;
-};
-
+type IdleState = { status: typeof State.Idle };
+type ReadyState = { status: typeof State.Ready };
+type SubmittingState = { status: typeof State.Submitting; action: PostActionType };
+type ErrorState<T> = { status: typeof State.Error; errors: Errors<T> };
 type UiState<T> = IdleState | ReadyState | SubmittingState | ErrorState<T>;
 
 export const usePostFormStore = defineStore('post-form', () => {
   const form = reactive<PostForm>({ title: '', subtitle: '', content: '' });
   const originalPost = reactive<Partial<Post>>({});
+  const pendingTagIds = ref<string[]>([]);
+  const originalTagIds = ref<string[]>([]);
   const postActions = usePosts();
 
-  const uiState = ref<UiState<PostForm>>({
-    status: 'idle',
-  });
+  const uiState = ref<UiState<PostForm>>({ status: 'idle' });
 
   let successCallback: ((updatedPost: Post, action: PostActionType) => void) | null = null;
   let errorCallback: ((error: string, action: PostActionType) => void) | null = null;
   let cancelCallback: (() => void) | null = null;
 
-  const hasChanges = computed<boolean>(() => getHasChanges(form, originalPost));
+  const hasTagChanges = computed(() => {
+    const pending = [...pendingTagIds.value].sort().join(',');
+    const original = [...originalTagIds.value].sort().join(',');
+    return pending !== original;
+  });
+
+  const hasChanges = computed<boolean>(() => getHasChanges(form, originalPost) || hasTagChanges.value);
   const actions = computed<PostAction[]>(() => getPostActions(originalPost, hasChanges.value));
 
   function init(initial?: Partial<Post>) {
     Object.assign(form, initial ?? {});
     Object.assign(originalPost, initial ?? {});
-
+    pendingTagIds.value = [];
+    originalTagIds.value = [];
     uiState.value = { status: 'ready' };
+  }
+
+  function initTags(tagIds: string[]) {
+    originalTagIds.value = [...tagIds];
+    pendingTagIds.value = [...tagIds];
+  }
+
+  function addPendingTag(tagId: string) {
+    if (!pendingTagIds.value.includes(tagId)) {
+      pendingTagIds.value.push(tagId);
+    }
+  }
+
+  function removePendingTag(tagId: string) {
+    pendingTagIds.value = pendingTagIds.value.filter((id) => id !== tagId);
   }
 
   function onSuccess(cb: (updatedPost: Post, action: PostActionType) => void) {
@@ -116,10 +124,7 @@ export const usePostFormStore = defineStore('post-form', () => {
   async function submit(action: PostActionType) {
     if (uiState.value.status === 'submitting') return;
 
-    uiState.value = {
-      status: 'submitting',
-      action,
-    };
+    uiState.value = { status: 'submitting', action };
 
     if (action === 'cancel') {
       init(originalPost);
@@ -136,11 +141,7 @@ export const usePostFormStore = defineStore('post-form', () => {
           const field = issue.path[0] as keyof PostForm;
           fieldErrors[field] = issue.message;
         });
-
-        uiState.value = {
-          status: 'error',
-          errors: fieldErrors,
-        };
+        uiState.value = { status: 'error', errors: fieldErrors };
         return;
       }
 
@@ -159,36 +160,35 @@ export const usePostFormStore = defineStore('post-form', () => {
           break;
       }
 
-      if (!savePromise) {
-        throw new Error('Invalid action');
-      }
+      if (!savePromise) throw new Error('Invalid action');
 
       const { data, error } = await savePromise;
+      if (error) throw new Error(error);
 
-      if (error) {
-        throw new Error(error);
+      // Persist tag changes on save (new post or edit)
+      if (action === 'save' && hasTagChanges.value) {
+        const postId = (data as Post).id;
+        const toAdd = pendingTagIds.value.filter((id) => !originalTagIds.value.includes(id));
+        const toRemove = originalTagIds.value.filter((id) => !pendingTagIds.value.includes(id));
+
+        await Promise.all([
+          ...toAdd.map((tagId) => postActions.addTagToPost({ postId, tagId })),
+          ...toRemove.map((tagId) => postActions.removeTagFromPost({ postId, tagId })),
+        ]);
+
+        originalTagIds.value = [...pendingTagIds.value];
       }
 
       successCallback?.(data as Post, action);
       uiState.value = { status: 'ready' };
     } catch (e: any) {
       if (e.message === 'Title already exists') {
-        uiState.value = {
-          status: 'error',
-          errors: {
-            title: e.message,
-          },
-        };
+        uiState.value = { status: 'error', errors: { title: e.message } };
         errorCallback?.(e.message, action);
         return;
       }
 
-      uiState.value = {
-        status: 'error',
-        errors: {
-          general: e.message || 'Something went wrong',
-        },
-      };
+      uiState.value = { status: 'error', errors: { general: e.message || 'Something went wrong' } };
       errorCallback?.(e.message, action);
     }
   }
@@ -197,8 +197,13 @@ export const usePostFormStore = defineStore('post-form', () => {
     actions,
     form,
     originalPost,
+    pendingTagIds,
+    originalTagIds,
     uiState,
     init,
+    initTags,
+    addPendingTag,
+    removePendingTag,
     onCancel,
     onError,
     onSuccess,
