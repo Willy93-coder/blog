@@ -17,6 +17,7 @@
   const fetchPost = async () => {
     if (isNew) {
       isLoading.value = false;
+      post.value = null;
       return;
     }
 

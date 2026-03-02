@@ -87,8 +87,11 @@ export const usePostFormStore = defineStore('post-form', () => {
   const actions = computed<PostAction[]>(() => getPostActions(originalPost, hasChanges.value));
 
   function init(initial?: Partial<Post>) {
-    Object.assign(form, initial ?? {});
+    const defaultForm: PostForm = { title: '', subtitle: '', content: '' };
+
+    Object.assign(form, { ...defaultForm, ...initial });
     Object.assign(originalPost, initial ?? {});
+
     pendingTagIds.value = [];
     originalTagIds.value = [];
     uiState.value = { status: 'ready' };
