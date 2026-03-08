@@ -13,7 +13,7 @@
   const navLinks: PublicNavbar[] = [
     { label: 'Posts', url: routes.posts() },
     { label: 'Tags', url: routes.tags() },
-    { label: 'About', url: routes.about() },
+    // { label: 'About', url: routes.about() },
   ];
 </script>
 
