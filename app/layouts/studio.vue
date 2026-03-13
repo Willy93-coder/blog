@@ -100,11 +100,13 @@
       }"
     >
       <template #header="{ collapsed }">
-        <div v-if="!collapsed" class="flex items-center gap-2">
+        <ULink v-if="!collapsed" :to="routes.studio()" class="flex items-center gap-2">
           <UIcon name="i-simple-icons-nuxtdotjs" class="size-5 text-primary" />
           <span class="text-primary font-bold text-lg uppercase">Blog Studio</span>
-        </div>
-        <UIcon v-else name="i-simple-icons-nuxtdotjs" class="size-5 text-primary mx-auto" />
+        </ULink>
+        <ULink v-else :to="routes.studio()" class="flex justify-center mx-auto">
+          <UIcon name="i-simple-icons-nuxtdotjs" class="size-5 text-primary" />
+        </ULink>
       </template>
 
       <template #default="{ collapsed }">
