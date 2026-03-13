@@ -111,6 +111,11 @@
       :ui="{
         trailingIcon: 'text-dimmed',
       }"
-    />
+    >
+      <template #leading v-if="collapsed">
+        <UAvatar v-if="avatar" :src="avatar.src" :alt="avatar.alt" size="2xs" />
+        <UIcon v-else name="i-lucide-user" class="size-4" />
+      </template>
+    </UButton>
   </UDropdownMenu>
 </template>
