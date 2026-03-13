@@ -86,7 +86,7 @@
       };
     });
 
-    return [{ label: 'Studio' }, ...items];
+    return [{ label: 'Studio', to: routes.studio() }, ...items];
   });
 </script>
 
