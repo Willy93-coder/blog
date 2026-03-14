@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import PostPublic from '~/components/posts/PostPublic.vue';
-  import type { PostWithTags } from '~/types/post';
+  import type { PostWithTagsAndAuthors } from '~/types/post';
 
   definePageMeta({
     public: true,
@@ -10,8 +10,8 @@
   const route = useRoute();
   const postActions = usePosts();
 
-  const { data: post } = await useAsyncData<PostWithTags | null>(`post-${route.params.url}`, async () => {
-    const { data, error } = await postActions.getPostWithTagsById({ id: route.params.url as string });
+  const { data: post } = await useAsyncData<PostWithTagsAndAuthors | null>(`post-${route.params.url}`, async () => {
+    const { data, error } = await postActions.getPostWithTagsAndAuthorsById({ id: route.params.url as string });
     if (error !== null || !data || !data.published) return null;
     return data;
   });

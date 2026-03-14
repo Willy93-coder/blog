@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import PostList from '~/components/posts/PostList.vue';
-  import type { PostWithTags } from '~/types/post';
+  import type { PostWithTagsAndAuthors } from '~/types/post';
 
   definePageMeta({
     public: true,
@@ -10,7 +10,7 @@
   const postFunctions = usePosts();
   const toast = useToast();
 
-  const { data: posts } = await useAsyncData<PostWithTags[]>('published-posts', async () => {
+  const { data: posts } = await useAsyncData<PostWithTagsAndAuthors[]>('published-posts', async () => {
     const { data, error } = await postFunctions.getLimitPublishedPostsWithTags({ limit: 5 });
     if (error !== null) {
       toast.add({ title: 'Error', description: 'Could not load posts. Please try again.', color: 'error' });

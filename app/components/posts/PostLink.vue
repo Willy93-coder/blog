@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  import type { PostWithTags } from '~/types/post';
+  import type { PostWithTagsAndAuthors } from '~/types/post';
   import { useRoutes } from '~/composables/useRoutes';
 
   const { post } = defineProps<{
-    post: PostWithTags;
+    post: PostWithTagsAndAuthors;
   }>();
 
   const routes = useRoutes();

@@ -3,7 +3,7 @@
   import Breadcrumb from '~/components/common/Breadcrumb.vue';
   import Pagination from '~/components/common/Pagination.vue';
   import PageHeader from '~/components/common/PageHeader.vue';
-  import type { PostWithTags } from '~/types/post';
+  import type { PostWithTagsAndAuthors } from '~/types/post';
 
   definePageMeta({
     public: true,
@@ -20,7 +20,7 @@
   const page = computed(() => Number(route.query.page) || 1);
   const tagName = computed(() => (route.query.tag as string) || null);
 
-  const { data: result } = await useAsyncData<{ posts: PostWithTags[]; totalPages: number }>(
+  const { data: result } = await useAsyncData<{ posts: PostWithTagsAndAuthors[]; totalPages: number }>(
     () => `published-posts-${page.value}-${tagName.value ?? ''}`,
     async () => {
       const { data, error } = await postFunctions.getPublishedPostsWithTags({

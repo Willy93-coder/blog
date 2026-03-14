@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  import type { PostWithTags } from '~/types/post';
+  import type { PostWithTagsAndAuthors } from '~/types/post';
   import PostLink from './PostLink.vue';
 
   const { posts, fallbackText } = defineProps<{
-    posts: PostWithTags[] | undefined;
+    posts: PostWithTagsAndAuthors[] | undefined;
     fallbackText?: string;
   }>();
 </script>

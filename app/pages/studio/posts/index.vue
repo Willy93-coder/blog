@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import PostTable from '~/components/posts/PostTable.vue';
   import { useRoutes } from '~/composables/useRoutes';
-  import type { PostWithTags } from '~/types/post';
+  import type { PostWithTagsAndAuthors } from '~/types/post';
 
   definePageMeta({
     layout: 'studio',
@@ -11,11 +11,11 @@
   const toast = useToast();
   const routes = useRoutes();
 
-  const postList = ref<PostWithTags[]>([]);
+  const postList = ref<PostWithTagsAndAuthors[]>([]);
 
   const fetchPosts = async () => {
     try {
-      const { data, error } = await postFunctions.getPostsWithTags();
+      const { data, error } = await postFunctions.getPostsWithTagsAndAuthors();
       if (error !== null) {
         toast.add({ title: 'Error', description: 'Error loading posts. Please try again', color: 'error' });
         postList.value = [];
