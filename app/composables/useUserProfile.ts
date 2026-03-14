@@ -13,7 +13,7 @@ const useUserProfile = () => {
     if (!userId.value) return;
 
     loading.value = true;
-    const { data, error } = await $supabase.from('profiles').select().eq('id', userId.value).single();
+    const { data, error } = await $supabase.from('profile').select().eq('id', userId.value).single();
 
     loading.value = false;
 
