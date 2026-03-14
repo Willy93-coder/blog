@@ -1,11 +1,11 @@
 <script setup lang="ts">
   import { h, resolveComponent } from 'vue';
   import type { TableColumn } from '@nuxt/ui';
-  import type { PostWithTags } from '~/types/post';
+  import type { PostWithTagsAndAuthors } from '~/types/post';
   import { useRoutes } from '~/composables/useRoutes';
 
   const props = defineProps<{
-    postList: PostWithTags[];
+    postList: PostWithTagsAndAuthors[];
   }>();
 
   const emit = defineEmits<{
@@ -19,6 +19,7 @@
   const UCheckbox = resolveComponent('UCheckbox');
   const UBadge = resolveComponent('UBadge');
   const UButton = resolveComponent('UButton');
+  const UAvatar = resolveComponent('UAvatar');
 
   // Delete modal state
   const isDeleteModalOpen = ref(false);
@@ -43,7 +44,7 @@
     isDeleteModalOpen.value = false;
   };
 
-  const columns: TableColumn<PostWithTags>[] = [
+  const columns: TableColumn<PostWithTagsAndAuthors>[] = [
     {
       id: 'select',
       header: ({ table }) =>
@@ -63,6 +64,19 @@
       accessorKey: 'title',
       header: 'Title',
       cell: ({ row }) => h('span', { class: 'font-medium truncate max-w-xs block' }, row.getValue('title')),
+    },
+    {
+      id: 'authors',
+      header: 'Author',
+      cell: ({ row }) => {
+        const authors = row.original.post_user?.map((pt) => pt.profiles) ?? [];
+        if (!authors.length) return h('span', { class: 'text-muted text-sm' }, '—');
+        return h(
+          'div',
+          { class: 'flex flex-wrap gap-1' },
+          authors.map((author) => h(UAvatar, { src: author.github_avatar_url, loading: 'lazy', size: 'sm' })),
+        );
+      },
     },
     {
       id: 'tags',
