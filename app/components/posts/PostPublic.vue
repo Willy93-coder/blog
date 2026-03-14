@@ -1,13 +1,15 @@
 <script setup lang="ts">
-  import type { PostWithTags } from '~/types/post';
+  import type { PostWithTagsAndAuthors } from '~/types/post';
   import TagBadge from '../tags/TagBadge.vue';
   import Breadcrumb from '~/components/common/Breadcrumb.vue';
+  import PostAuthor from './PostAuthor.vue';
 
   const props = defineProps<{
-    post: PostWithTags;
+    post: PostWithTagsAndAuthors;
   }>();
 
   const tags = computed(() => props.post.post_tag?.map((pt) => pt.tag) ?? []);
+  const author = computed(() => props.post.post_user?.[0]?.profiles ?? null);
 
   const formattedDate = computed(() => {
     const date = props.post.published_at ?? props.post.created_at;
@@ -31,6 +33,9 @@
       {{ post.subtitle }}
     </p>
 
+    <div class="mt-5">
+      <PostAuthor :profile="author" link />
+    </div>
     <div class="mt-4 flex flex-wrap items-center gap-3">
       <time :datetime="post.published_at ?? post.created_at" class="text-sm text-zinc-400 dark:text-zinc-500">
         {{ formattedDate }}
@@ -59,7 +64,7 @@
 </template>
 
 <style scoped>
-:deep(.ProseMirror) {
-  padding: 0;
-}
+  :deep(.ProseMirror) {
+    padding: 0;
+  }
 </style>
