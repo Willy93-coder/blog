@@ -19,13 +19,13 @@
 
 <template>
   <header
-    class="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/80 backdrop-blur-sm dark:border-zinc-800 dark:bg-zinc-900/80"
+    class="sticky top-0 z-50 w-full border-b border-default bg-default/80 backdrop-blur-sm dark:border-default dark:bg-default/80"
   >
     <nav class="mx-auto flex max-w-3xl items-center justify-between px-4 py-4">
       <!-- Logo -->
       <NuxtLink
         :to="routes.home()"
-        class="font-mono text-lg font-bold tracking-tight text-zinc-900 transition-colors hover:text-zinc-500 dark:text-zinc-100 dark:hover:text-zinc-400"
+        class="font-mono text-lg font-bold tracking-tight text-default transition-colors hover:text-muted dark:text-default dark:hover:text-muted"
       >
         My Blog
       </NuxtLink>
@@ -36,8 +36,8 @@
           v-for="link in navLinks"
           :key="link.url"
           :to="link.url"
-          class="flex items-center gap-1.5 text-sm font-medium text-zinc-500 underline-offset-4 transition-colors hover:text-zinc-900 hover:underline dark:text-zinc-400 dark:hover:text-zinc-100"
-          active-class="text-zinc-900 underline dark:text-zinc-100"
+          class="flex items-center gap-1.5 text-sm font-medium text-muted underline-offset-4 transition-colors hover:text-default hover:underline dark:text-muted dark:hover:text-default"
+          active-class="text-default underline dark:text-default"
         >
           <UIcon v-if="link.icon" :name="link.icon" class="size-3.5" />
           {{ link.label }}

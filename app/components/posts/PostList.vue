@@ -15,5 +15,5 @@
     </li>
   </ul>
 
-  <p v-else class="text-zinc-400 dark:text-zinc-500 text-sm">{{ fallbackText }}</p>
+  <p v-else class="text-dimmed text-sm">{{ fallbackText }}</p>
 </template>
