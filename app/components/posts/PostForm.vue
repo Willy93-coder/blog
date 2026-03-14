@@ -2,9 +2,20 @@
   import { usePostFormStore } from '~/stores/postFormStore';
   import RichTextEditor from '../common/RichTextEditor.vue';
   import PostTagSection from './PostTagSection.vue';
+  import PostAuthor from './PostAuthor.vue';
+
+  const props = defineProps<{
+    authorProfile?: {
+      full_name: string | null;
+      github_avatar_url: string | null;
+      github_username: string | null;
+    } | null;
+  }>();
 
   const postFormStore = usePostFormStore();
   const { profile } = useUserProfile();
+
+  const displayedProfile = computed(() => props.authorProfile ?? profile.value ?? null);
 
   const today = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
 
@@ -64,24 +75,11 @@
           <p class="text-xs text-muted mt-0.5">Author, status and publication dates.</p>
         </div>
         <div class="p-4 space-y-3">
-          <div v-if="profile" class="flex items-center gap-3">
-            <UAvatar
-              :src="profile.github_avatar_url ?? undefined"
-              :alt="profile.full_name ?? profile.github_username ?? 'Author'"
-              size="sm"
-            />
-            <div class="min-w-0">
-              <p class="text-sm font-medium truncate">{{ profile.full_name ?? profile.github_username }}</p>
-              <p v-if="profile.github_username" class="text-xs text-muted truncate">@{{ profile.github_username }}</p>
-            </div>
-          </div>
-          <USeparator v-if="profile" />
+          <PostAuthor :profile="displayedProfile" />
+          <USeparator v-if="displayedProfile" />
           <div class="flex items-center justify-between">
             <span class="text-sm text-muted">Status</span>
-            <UBadge
-              :color="postFormStore.originalPost.published ? 'success' : 'neutral'"
-              variant="subtle"
-            >
+            <UBadge :color="postFormStore.originalPost.published ? 'success' : 'neutral'" variant="subtle">
               {{ postFormStore.originalPost.published ? 'Published' : 'Draft' }}
             </UBadge>
           </div>
@@ -109,7 +107,10 @@
     <!-- Content editor — full width, last -->
     <div class="border border-accented rounded-lg overflow-hidden">
       <div class="px-4 py-3 border-b border-accented">
-        <h3 class="text-sm font-semibold">Post Content <span class="text-error">*</span></h3>
+        <h3 class="text-sm font-semibold">
+          Post Content
+          <span class="text-error">*</span>
+        </h3>
         <p class="text-xs text-muted mt-0.5">Write your post using the rich text editor below.</p>
       </div>
       <RichTextEditor
