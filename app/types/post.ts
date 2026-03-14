@@ -2,8 +2,21 @@ import type { Tables, TablesInsert, TablesUpdate } from './supabase';
 import z from 'zod';
 
 export type Post = Tables<'post'>;
-export type PostWithTags = Post & {
-  post_tag: { tag: { id: string; name: string } }[];
+export type PostWithTagsAndAuthors = Post & {
+  post_tag: {
+    tag: {
+      id: string;
+      name: string;
+    };
+  }[];
+  post_user: {
+    profiles: {
+      id: string;
+      full_name: string | null;
+      github_avatar_url: string | null;
+      github_username: string | null;
+    };
+  }[];
 };
 export type CreatePostInput = TablesInsert<'post'>;
 export type UpdatePostInput = TablesUpdate<'post'>;
