@@ -2,7 +2,7 @@
   import PostForm from '~/components/posts/PostForm.vue';
   import PostFormSkeleton from '~/components/skeletons/PostFormSkeleton.vue';
   import { usePostFormStore } from '~/stores/postFormStore';
-  import type { Post, PostActionType } from '~/types/post';
+  import type { Post, PostActionType, PostWithTagsAndAuthors } from '~/types/post';
 
   definePageMeta({ layout: 'studio' });
 
@@ -11,8 +11,10 @@
   const postActions = usePosts();
 
   const isNew = route.params.url === 'new';
-  const post = ref<Post | null>(null);
+  const post = ref<PostWithTagsAndAuthors | null>(null);
   const isLoading = ref(!isNew);
+
+  const postAuthor = computed(() => post.value?.post_user?.[0]?.profiles ?? null);
 
   const fetchPost = async () => {
     if (isNew) {
@@ -22,7 +24,7 @@
     }
 
     try {
-      const { data, error } = await postActions.getPostById({ id: route.params.url as string });
+      const { data, error } = await postActions.getPostWithTagsAndAuthorsById({ id: route.params.url as string });
       if (error !== null) {
         toast.add({ title: 'Error', description: 'Error to get post. Please try again', color: 'error' });
         post.value = null;
@@ -59,7 +61,7 @@
     if (action === 'save') {
       if (isNew) navigateTo(`/studio/posts/${updatedPost.id}`);
     } else {
-      post.value = updatedPost;
+      post.value = { ...post.value!, ...updatedPost };
     }
   });
 
@@ -96,6 +98,6 @@
       </div>
     </div>
     <PostFormSkeleton v-if="isLoading" />
-    <PostForm v-else />
+    <PostForm v-else :author-profile="postAuthor" />
   </div>
 </template>
