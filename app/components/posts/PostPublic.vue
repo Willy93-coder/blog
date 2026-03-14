@@ -53,7 +53,7 @@
   <USeparator class="mb-8" />
 
   <!-- Content -->
-  <div class="prose prose-zinc dark:prose-invert max-w-none">
+  <div class="prose dark:prose-invert max-w-none">
     <UEditor
       :model-value="post.content"
       content-type="markdown"

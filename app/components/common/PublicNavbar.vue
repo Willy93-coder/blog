@@ -47,7 +47,7 @@
         <button
           @click="toggleColorMode"
           :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-          class="rounded-md p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+          class="rounded-md p-1.5 text-muted transition-colors hover:bg-muted hover:text-default dark:text-muted dark:hover:bg-accented dark:hover:text-default"
         >
           <UIcon :name="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="size-4" />
         </button>
@@ -58,7 +58,7 @@
         <button
           @click="toggleColorMode"
           :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-          class="rounded-md p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+          class="rounded-md p-1.5 text-muted transition-colors hover:bg-muted hover:text-default dark:text-muted dark:hover:bg-accented dark:hover:text-default"
         >
           <UIcon :name="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="size-4" />
         </button>
@@ -67,7 +67,7 @@
           @click="isMenuOpen = !isMenuOpen"
           :aria-expanded="isMenuOpen"
           aria-label="Toggle menu"
-          class="rounded-md p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+          class="rounded-md p-1.5 text-muted transition-colors hover:bg-muted hover:text-default dark:text-muted dark:hover:bg-accented dark:hover:text-default"
         >
           <UIcon :name="isMenuOpen ? 'i-lucide-x' : 'i-lucide-menu'" class="size-5" />
         </button>
@@ -75,13 +75,13 @@
     </nav>
 
     <!-- Mobile menu -->
-    <div v-if="isMenuOpen" class="border-t border-zinc-200 dark:border-zinc-800 sm:hidden">
+    <div v-if="isMenuOpen" class="border-t border-default dark:border-default sm:hidden">
       <ul class="mx-auto max-w-3xl space-y-1 px-4 py-3">
         <li v-for="link in navLinks" :key="link.url">
           <NuxtLink
             :to="link.url"
-            class="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
-            active-class="bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
+            class="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-toned transition-colors hover:bg-muted hover:text-default dark:text-muted dark:hover:bg-accented dark:hover:text-default"
+            active-class="bg-muted text-default dark:bg-accented dark:text-default"
             @click="isMenuOpen = false"
           >
             <UIcon v-if="link.icon" :name="link.icon" class="size-4" />

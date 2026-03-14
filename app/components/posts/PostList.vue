@@ -9,7 +9,7 @@
 </script>
 
 <template>
-  <ul v-if="posts?.length" class="divide-y divide-zinc-100 dark:divide-zinc-800">
+  <ul v-if="posts?.length" class="divide-y divide-default">
     <li v-for="post in posts" :key="post.id" class="py-1">
       <PostLink :post="post" />
     </li>
