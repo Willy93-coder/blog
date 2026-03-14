@@ -1,7 +1,14 @@
 import { useNuxtApp } from '#app';
 import type { PostgrestError } from '@supabase/supabase-js';
 import type { ActionResult, QueryResult } from '~/types/result';
-import type { CreatePostInput, DeletePostInput, Post, PostIdInput, PostWithTags, UpdatePostInput } from '~/types/post';
+import type {
+  CreatePostInput,
+  DeletePostInput,
+  Post,
+  PostIdInput,
+  PostWithTagsAndAuthors,
+  UpdatePostInput,
+} from '~/types/post';
 
 const toErrorMessage = (error: PostgrestError | null) => error?.message ?? null;
 
@@ -77,23 +84,43 @@ const usePosts = () => {
       const { error } = await $supabase.from('post').delete().in('id', ids);
       return { error: toErrorMessage(error) };
     },
-    getPostWithTagsById: async ({ id }: PostIdInput): Promise<QueryResult<PostWithTags | null>> => {
+    getPostWithTagsAndAuthorsById: async ({ id }: PostIdInput): Promise<QueryResult<PostWithTagsAndAuthors | null>> => {
       if (!id) {
         return { data: null, error: 'Post ID is required' };
       }
-      const { data, error } = await $supabase.from('post').select('*, post_tag(tag(id, name))').eq('id', id).single();
-
-      return { data: data as PostWithTags | null, error: toErrorMessage(error) };
-    },
-    getPostsWithTags: async (): Promise<QueryResult<PostWithTags[]>> => {
       const { data, error } = await $supabase
         .from('post')
-        .select('*, post_tag(tag(id, name))')
+        .select(
+          `
+            *,
+            post_tag(tag(id, name)),
+            post_user(profiles(id, full_name, github_avatar_url, github_username))
+          `,
+        )
+        .eq('id', id)
+        .single();
+
+      return { data: data as PostWithTagsAndAuthors | null, error: toErrorMessage(error) };
+    },
+    getPostsWithTagsAndAuthors: async (): Promise<QueryResult<PostWithTagsAndAuthors[]>> => {
+      const { data, error } = await $supabase
+        .from('post')
+        .select(
+          `
+            *,
+            post_tag(tag(id, name)),
+            post_user(profiles(id, full_name, github_avatar_url, github_username))
+          `,
+        )
         .order('created_at', { ascending: false });
 
-      return { data: (data ?? []) as PostWithTags[], error: toErrorMessage(error) };
+      return { data: (data ?? []) as PostWithTagsAndAuthors[], error: toErrorMessage(error) };
     },
-    getLimitPublishedPostsWithTags: async ({ limit = 10 }: { limit: number }): Promise<QueryResult<PostWithTags[]>> => {
+    getLimitPublishedPostsWithTags: async ({
+      limit = 10,
+    }: {
+      limit: number;
+    }): Promise<QueryResult<PostWithTagsAndAuthors[]>> => {
       const { data, error } = await $supabase
         .from('post')
         .select('*, post_tag(tag(id, name))')
@@ -101,7 +128,7 @@ const usePosts = () => {
         .limit(limit)
         .order('published_at', { ascending: false });
 
-      return { data: (data ?? []) as PostWithTags[], error: toErrorMessage(error) };
+      return { data: (data ?? []) as PostWithTagsAndAuthors[], error: toErrorMessage(error) };
     },
     getTagsByPostId: async ({ id }: PostIdInput): Promise<QueryResult<{ id: string; name: string }[]>> => {
       if (!id) {
@@ -127,29 +154,22 @@ const usePosts = () => {
       page: number;
       pageSize: number;
       tagName?: string | null;
-    }): Promise<QueryResult<{ posts: PostWithTags[]; total: number }>> => {
+    }): Promise<QueryResult<{ posts: PostWithTagsAndAuthors[]; total: number }>> => {
       const from = (page - 1) * pageSize;
       const to = from + pageSize - 1;
 
-      const select = tagName
-        ? '*, post_tag!inner(tag!inner(id, name))'
-        : '*, post_tag(tag(id, name))';
+      const select = tagName ? '*, post_tag!inner(tag!inner(id, name))' : '*, post_tag(tag(id, name))';
 
-      let query = $supabase
-        .from('post')
-        .select(select, { count: 'exact' })
-        .eq('published', true);
+      let query = $supabase.from('post').select(select, { count: 'exact' }).eq('published', true);
 
       if (tagName) {
         query = query.eq('post_tag.tag.name', tagName);
       }
 
-      const { data, error, count } = await query
-        .order('published_at', { ascending: false })
-        .range(from, to);
+      const { data, error, count } = await query.order('published_at', { ascending: false }).range(from, to);
 
       return {
-        data: { posts: (data ?? []) as PostWithTags[], total: count ?? 0 },
+        data: { posts: (data ?? []) as PostWithTagsAndAuthors[], total: count ?? 0 },
         error: toErrorMessage(error),
       };
     },
