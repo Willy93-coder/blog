@@ -43,21 +43,21 @@
             label: 'Light',
             icon: 'i-lucide-sun',
             type: 'checkbox',
-            checked: colorMode.value === 'light',
+            checked: colorMode.preference === 'light',
             onSelect(e: Event) {
               e.preventDefault();
 
-              colorMode.value = 'light';
+              colorMode.preference = 'light';
             },
           },
           {
             label: 'Dark',
             icon: 'i-lucide-moon',
             type: 'checkbox',
-            checked: colorMode.value === 'dark',
+            checked: colorMode.preference === 'dark',
             onUpdateChecked(checked: boolean) {
               if (checked) {
-                colorMode.value = 'dark';
+                colorMode.preference = 'dark';
               }
             },
             onSelect(e: Event) {

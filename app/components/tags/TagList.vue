@@ -19,5 +19,5 @@
     </NuxtLink>
   </div>
 
-  <p v-else class="text-sm text-zinc-400 dark:text-zinc-500">{{ fallbackText }}</p>
+  <p v-else class="text-sm text-dimmed">{{ fallbackText }}</p>
 </template>

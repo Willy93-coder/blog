@@ -10,14 +10,11 @@
 </script>
 
 <template>
-  <div
-    v-if="totalPages > 1"
-    class="flex items-center justify-center gap-6 text-sm font-medium text-zinc-500 dark:text-zinc-400"
-  >
+  <div v-if="totalPages > 1" class="flex items-center justify-center gap-6 text-sm font-medium text-muted">
     <button
       :disabled="page === 1"
       @click="emit('changePage', page - 1)"
-      class="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-zinc-900 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:text-zinc-100"
+      class="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-default disabled:cursor-not-allowed disabled:opacity-40 dark:hover:text-default"
     >
       <UIcon name="i-lucide-arrow-left" class="size-4" />
       Prev
@@ -28,7 +25,7 @@
     <button
       :disabled="page === totalPages"
       @click="emit('changePage', page + 1)"
-      class="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-zinc-900 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:text-zinc-100"
+      class="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-default disabled:cursor-not-allowed disabled:opacity-40 dark:hover:text-default"
     >
       Next
       <UIcon name="i-lucide-arrow-right" class="size-4" />

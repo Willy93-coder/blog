@@ -14,7 +14,7 @@
   const post = ref<PostWithTagsAndAuthors | null>(null);
   const isLoading = ref(!isNew);
 
-  const postAuthor = computed(() => post.value?.post_user?.[0]?.profiles ?? null);
+  const postAuthor = computed(() => post.value?.post_user?.[0]?.profile ?? null);
 
   const fetchPost = async () => {
     if (isNew) {

@@ -94,7 +94,7 @@ const usePosts = () => {
           `
             *,
             post_tag(tag(id, name)),
-            post_user(profiles(id, full_name, github_avatar_url, github_username))
+            post_user(profile(id, full_name, github_avatar_url, github_username))
           `,
         )
         .eq('id', id)
@@ -109,7 +109,7 @@ const usePosts = () => {
           `
             *,
             post_tag(tag(id, name)),
-            post_user(profiles(id, full_name, github_avatar_url, github_username))
+            post_user(profile(id, full_name, github_avatar_url, github_username))
           `,
         )
         .order('created_at', { ascending: false });

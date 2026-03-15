@@ -9,7 +9,7 @@
   }>();
 
   const tags = computed(() => props.post.post_tag?.map((pt) => pt.tag) ?? []);
-  const author = computed(() => props.post.post_user?.[0]?.profiles ?? null);
+  const author = computed(() => props.post.post_user?.[0]?.profile ?? null);
 
   const formattedDate = computed(() => {
     const date = props.post.published_at ?? props.post.created_at;
@@ -25,11 +25,11 @@
   <Breadcrumb :items="[{ label: 'Home', to: '/' }, { label: 'Posts', to: '/posts' }, { label: post.title }]" />
   <!-- Header -->
   <header class="mb-8">
-    <h1 class="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-4xl">
+    <h1 class="text-3xl font-bold tracking-tight text-default sm:text-4xl">
       {{ post.title }}
     </h1>
 
-    <p v-if="post.subtitle" class="mt-3 text-lg text-zinc-500 dark:text-zinc-400">
+    <p v-if="post.subtitle" class="mt-3 text-lg text-muted">
       {{ post.subtitle }}
     </p>
 
@@ -37,7 +37,7 @@
       <PostAuthor :profile="author" link />
     </div>
     <div class="mt-4 flex flex-wrap items-center gap-3">
-      <time :datetime="post.published_at ?? post.created_at" class="text-sm text-zinc-400 dark:text-zinc-500">
+      <time :datetime="post.published_at ?? post.created_at" class="text-sm text-dimmed">
         {{ formattedDate }}
       </time>
 
@@ -53,7 +53,7 @@
   <USeparator class="mb-8" />
 
   <!-- Content -->
-  <div class="prose prose-zinc dark:prose-invert max-w-none">
+  <div class="prose dark:prose-invert max-w-none">
     <UEditor
       :model-value="post.content"
       content-type="markdown"

@@ -21,9 +21,9 @@
 <template>
   <NuxtLink
     :to="routes.post(post.id)"
-    class="flex justify-between items-center gap-4 rounded-md px-3 py-2 -mx-3 hover:opacity-60 hover:bg-gray-100 dark:hover:bg-gray-800"
+    class="flex justify-between items-center gap-4 rounded-md px-3 py-2 -mx-3 hover:bg-muted"
   >
     <span>{{ post.title }}</span>
-    <span class="text-sm text-gray-500 shrink-0">{{ formattedDate }}</span>
+    <span class="text-sm text-dimmed shrink-0">{{ formattedDate }}</span>
   </NuxtLink>
 </template>

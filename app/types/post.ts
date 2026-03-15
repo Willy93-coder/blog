@@ -10,7 +10,7 @@ export type PostWithTagsAndAuthors = Post & {
     };
   }[];
   post_user: {
-    profiles: {
+    profile: {
       id: string;
       full_name: string | null;
       github_avatar_url: string | null;
