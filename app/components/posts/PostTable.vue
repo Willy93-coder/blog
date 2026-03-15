@@ -69,7 +69,7 @@
       id: 'authors',
       header: 'Author',
       cell: ({ row }) => {
-        const authors = row.original.post_user?.map((pt) => pt.profiles) ?? [];
+        const authors = row.original.post_user?.map((pt) => pt.profile) ?? [];
         if (!authors.length) return h('span', { class: 'text-muted text-sm' }, '—');
         return h(
           'div',
