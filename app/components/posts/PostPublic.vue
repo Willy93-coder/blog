@@ -9,7 +9,7 @@
   }>();
 
   const tags = computed(() => props.post.post_tag?.map((pt) => pt.tag) ?? []);
-  const author = computed(() => props.post.post_user?.[0]?.profiles ?? null);
+  const author = computed(() => props.post.post_user?.[0]?.profile ?? null);
 
   const formattedDate = computed(() => {
     const date = props.post.published_at ?? props.post.created_at;
