@@ -14,4 +14,16 @@ export default defineNuxtConfig({
   routeRules: {
     '/studio/**': { ssr: false },
   },
+  app: {
+    head: {
+      title: 'GMV-Blog',
+      htmlAttrs: {
+        lang: 'en',
+      },
+      link: [
+        { rel: 'icon', type: 'image/png', href: '/favicon-light.png', media: '(prefers-color-scheme: light)' },
+        { rel: 'icon', type: 'image/png', href: '/favicon-dark.png', media: '(prefers-color-scheme: dark)' },
+      ],
+    },
+  },
 });
