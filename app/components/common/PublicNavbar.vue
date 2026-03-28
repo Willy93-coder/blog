@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import type { PublicNavbar } from '~/types/publicNavbar';
+  import AppLogo from '~/components/common/AppLogo.vue';
 
   const colorMode = useColorMode();
   const isDark = computed(() => colorMode.value === 'dark');
@@ -23,11 +24,8 @@
   >
     <nav class="mx-auto flex max-w-3xl items-center justify-between px-4 py-4">
       <!-- Logo -->
-      <NuxtLink
-        :to="routes.home()"
-        class="font-mono text-lg font-bold tracking-tight text-default transition-colors hover:text-muted dark:text-default dark:hover:text-muted"
-      >
-        My Blog
+      <NuxtLink :to="routes.home()" aria-label="GMV-Blog">
+        <AppLogo />
       </NuxtLink>
 
       <!-- Desktop nav -->
