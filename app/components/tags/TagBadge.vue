@@ -5,7 +5,7 @@
 </script>
 
 <template>
-  <span class="font-mono text-xs text-muted border border-default px-1.5 py-0.5 transition-colors hover:text-primary hover:border-primary cursor-default">
+  <span class="font-mono text-xs text-muted border border-default px-1.5 py-0.5 transition-colors hover:text-primary hover:border-primary">
     [{{ tag }}]
   </span>
 </template>
