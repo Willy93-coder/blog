@@ -11,7 +11,7 @@
     if (route.query.toast === 'login_success') {
       toast.add({
         title: 'Welcome!',
-        description: 'You're now logged in.',
+        description: "You're now logged in.",
         icon: 'i-lucide-log-in',
       });
     }
