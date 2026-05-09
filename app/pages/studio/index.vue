@@ -11,15 +11,19 @@
     if (route.query.toast === 'login_success') {
       toast.add({
         title: 'Welcome!',
-        description: 'You’re now logged in.',
+        description: 'You're now logged in.',
         icon: 'i-lucide-log-in',
       });
     }
-    // Clean query param
     router.replace({ path: route.path, query: {} });
   });
 </script>
 
 <template>
-  <h2>Studio Page</h2>
+  <div>
+    <h1 class="text-xl font-bold text-highlighted mb-1">
+      <span class="text-primary mr-1">#</span>Studio
+    </h1>
+    <p class="font-mono text-xs text-muted">Manage your posts and tags.</p>
+  </div>
 </template>
