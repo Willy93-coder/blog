@@ -96,17 +96,20 @@
       collapsible
       resizable
       :ui="{
+        root: 'overflow-hidden',
         footer: 'border-t border-default',
       }"
     >
       <template #header="{ collapsed }">
-        <ULink v-if="!collapsed" :to="routes.studio()" class="flex items-center gap-2">
-          <UIcon name="i-lucide-square-pen" class="size-5 text-primary" />
-          <span class="text-primary font-bold text-lg uppercase">Blog Studio</span>
-        </ULink>
-        <ULink v-else :to="routes.studio()" class="flex justify-center mx-auto">
-          <UIcon name="i-lucide-square-pen" class="size-5 text-primary" />
-        </ULink>
+        <Transition name="sidebar-fade" mode="out-in">
+          <ULink v-if="!collapsed" :to="routes.studio()" class="flex items-center gap-2 overflow-hidden">
+            <UIcon name="i-lucide-square-pen" class="size-5 text-primary shrink-0" />
+            <span class="text-primary font-bold text-sm uppercase truncate">Blog Studio</span>
+          </ULink>
+          <ULink v-else :to="routes.studio()" class="flex justify-center mx-auto">
+            <UIcon name="i-lucide-square-pen" class="size-5 text-primary" />
+          </ULink>
+        </Transition>
       </template>
 
       <template #default="{ collapsed }">
@@ -143,3 +146,43 @@
     </UDashboardPanel>
   </UDashboardGroup>
 </template>
+
+<style scoped>
+/* Width transition via :deep so we can scope the media query */
+:deep([data-slot="root"]) {
+  transition: width 200ms ease-in-out;
+  will-change: width;
+}
+
+/* Enter: ease-out, slide in from left + fade */
+.sidebar-fade-enter-active {
+  transition: opacity 180ms ease-out, transform 180ms ease-out;
+}
+/* Leave: ease-in, exit faster than enter (≈60%) */
+.sidebar-fade-leave-active {
+  transition: opacity 110ms ease-in, transform 110ms ease-in;
+}
+.sidebar-fade-enter-from {
+  opacity: 0;
+  transform: translateX(-8px);
+}
+.sidebar-fade-leave-to {
+  opacity: 0;
+  transform: translateX(-4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :deep([data-slot="root"]) {
+    transition: none;
+    will-change: auto;
+  }
+  .sidebar-fade-enter-active,
+  .sidebar-fade-leave-active {
+    transition: opacity 100ms linear;
+  }
+  .sidebar-fade-enter-from,
+  .sidebar-fade-leave-to {
+    transform: none;
+  }
+}
+</style>
