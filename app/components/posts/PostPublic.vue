@@ -8,6 +8,7 @@
     post: PostWithTagsAndAuthors;
   }>();
 
+  const codeHighlight = useCodeHighlight();
   const tags = computed(() => props.post.post_tag?.map((pt) => pt.tag) ?? []);
   const author = computed(() => props.post.post_user?.[0]?.profile ?? null);
 
@@ -54,7 +55,8 @@
       :model-value="post.content"
       content-type="markdown"
       :editable="false"
-      :starter-kit="{ link: { openOnClick: true } }"
+      :starter-kit="{ link: { openOnClick: true }, codeBlock: false }"
+      :extensions="codeHighlight"
       :ui="{ base: 'sm:px-0' }"
     />
   </div>

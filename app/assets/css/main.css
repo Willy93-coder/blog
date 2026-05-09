@@ -40,6 +40,72 @@
   --ui-error: #dc2626;
 }
 
+/* ─── syntax highlighting — github-nvim-theme (Primer) ─── */
+
+/* keywords & storage: red */
+.hljs-keyword,
+.hljs-storage,
+.hljs-operator {
+  color: #d73a49;
+}
+
+/* functions, entities, types: purple */
+.hljs-built_in,
+.hljs-title.function_,
+.hljs-title.function,
+.hljs-type,
+.hljs-class {
+  color: #6f42c1;
+}
+
+/* constants, numbers, class names: blue */
+.hljs-number,
+.hljs-literal,
+.hljs-title.class_,
+.hljs-property,
+.hljs-constant {
+  color: #005cc5;
+}
+
+/* strings & attributes: dark navy */
+.hljs-string,
+.hljs-attr,
+.hljs-attribute,
+.hljs-template-variable {
+  color: #032f62;
+}
+
+/* variables & params: orange */
+.hljs-variable,
+.hljs-params,
+.hljs-name {
+  color: #e36209;
+}
+
+/* tags (HTML/JSX): green */
+.hljs-tag,
+.hljs-selector-tag {
+  color: #22863a;
+}
+
+/* comments: muted gray + italic */
+.hljs-comment,
+.hljs-quote {
+  color: #6a737d;
+  font-style: italic;
+}
+
+/* selectors: purple */
+.hljs-selector-class,
+.hljs-selector-id {
+  color: #6f42c1;
+}
+
+/* meta & decorators: red */
+.hljs-meta {
+  color: #d73a49;
+}
+
 /* ─── dark mode ──────────────────────────────────────────── */
 .dark {
   /* primary: bright terminal green — shade 400 for dark mode legibility */
@@ -69,4 +135,57 @@
   /* semantic */
   --ui-secondary: #4ade80;
   --ui-error: #f87171;
+}
+
+/* ─── syntax dark overrides — github_dark palette ────────── */
+
+.dark .hljs-keyword,
+.dark .hljs-storage,
+.dark .hljs-operator {
+  color: #ff7b72;
+}
+
+.dark .hljs-built_in,
+.dark .hljs-title.function_,
+.dark .hljs-title.function,
+.dark .hljs-type,
+.dark .hljs-class,
+.dark .hljs-selector-class,
+.dark .hljs-selector-id {
+  color: #d2a8ff;
+}
+
+.dark .hljs-number,
+.dark .hljs-literal,
+.dark .hljs-title.class_,
+.dark .hljs-property,
+.dark .hljs-constant {
+  color: #79c0ff;
+}
+
+.dark .hljs-string,
+.dark .hljs-attr,
+.dark .hljs-attribute,
+.dark .hljs-template-variable {
+  color: #a5d6ff;
+}
+
+.dark .hljs-variable,
+.dark .hljs-params,
+.dark .hljs-name {
+  color: #ffa657;
+}
+
+.dark .hljs-tag,
+.dark .hljs-selector-tag {
+  color: #7ee787;
+}
+
+.dark .hljs-comment,
+.dark .hljs-quote {
+  color: #8b949e;
+}
+
+.dark .hljs-meta {
+  color: #ff7b72;
 }
