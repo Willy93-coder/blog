@@ -15,6 +15,53 @@ export default defineAppConfig({
         },
       },
     },
+    button: {
+      slots: {
+        base: 'rounded-none',
+      },
+    },
+    input: {
+      slots: {
+        base: 'rounded-none',
+      },
+    },
+    textarea: {
+      slots: {
+        base: 'rounded-none',
+      },
+    },
+    select: {
+      slots: {
+        base: 'rounded-none',
+        content: 'rounded-none',
+        item: 'before:rounded-none',
+      },
+    },
+    modal: {
+      slots: {
+        content: 'rounded-none',
+      },
+    },
+    dropdownMenu: {
+      slots: {
+        content: 'rounded-none',
+        item: 'before:rounded-none',
+      },
+    },
+    navigationMenu: {
+      slots: {
+        link: 'before:rounded-none',
+        childLink: 'before:rounded-none',
+        viewport: 'rounded-none',
+      },
+    },
+    table: {
+      slots: {
+        th: 'px-4 py-2.5 text-xs text-muted uppercase font-medium tracking-wider',
+        td: 'p-4 text-sm text-default',
+        empty: 'py-8 text-center text-xs text-dimmed',
+      },
+    },
     editor: {
       slots: {
         root: '',
