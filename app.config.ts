@@ -4,6 +4,17 @@ export default defineAppConfig({
       primary: 'green',
       neutral: 'zinc',
     },
+    badge: {
+      variants: {
+        size: {
+          xs: { base: 'rounded-none' },
+          sm: { base: 'rounded-none' },
+          md: { base: 'rounded-none' },
+          lg: { base: 'rounded-none' },
+          xl: { base: 'rounded-none' },
+        },
+      },
+    },
     editor: {
       slots: {
         root: '',
