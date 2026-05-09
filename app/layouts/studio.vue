@@ -113,9 +113,9 @@
       </template>
 
       <template #default="{ collapsed }">
-        <UNavigationMenu :collapsed="collapsed" :items="items[0]" orientation="vertical" tooltip popover />
+        <UNavigationMenu :collapsed="collapsed" :items="items[0]" orientation="vertical" tooltip popover class="nav-primary-hover" />
 
-        <UNavigationMenu :collapsed="collapsed" :items="items[1]" orientation="vertical" class="mt-auto" />
+        <UNavigationMenu :collapsed="collapsed" :items="items[1]" orientation="vertical" class="mt-auto nav-primary-hover" />
       </template>
 
       <template #footer="{ collapsed }">
@@ -169,6 +169,23 @@
 .sidebar-fade-leave-to {
   opacity: 0;
   transform: translateX(-4px);
+}
+
+/* Green hover on nav links — consistent with primary ghost button */
+:deep(.nav-primary-hover [data-slot="link"]:hover) {
+  color: var(--ui-primary);
+}
+:deep(.nav-primary-hover [data-slot="link"]:hover::before) {
+  background-color: color-mix(in oklch, var(--ui-primary) 10%, transparent);
+}
+:deep(.nav-primary-hover [data-slot="link"]:hover [data-slot="linkLeadingIcon"]) {
+  color: var(--ui-primary);
+}
+:deep(.nav-primary-hover [data-slot="childLink"]:hover) {
+  color: var(--ui-primary);
+}
+:deep(.nav-primary-hover [data-slot="childLink"]:hover::before) {
+  background-color: color-mix(in oklch, var(--ui-primary) 10%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
