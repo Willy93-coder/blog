@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import Breadcrumb from '~/components/common/Breadcrumb.vue';
-  import PageHeader from '~/components/common/PageHeader.vue';
   import TagList from '~/components/tags/TagList.vue';
   import type { Tag } from '~/types/tag';
 
@@ -23,11 +21,15 @@
 </script>
 
 <template>
-  <div class="flex min-h-full flex-col mx-auto max-w-3xl flex-1 gap-2">
-    <Breadcrumb :items="[{ label: 'Home', to: '/' }, { label: 'Tags' }]" />
+  <div class="space-y-8">
+    <!-- Header -->
+    <section>
+      <p class="font-mono text-xs text-dimmed mb-3">$ ls ~/tags</p>
+      <h1 class="text-2xl font-bold text-highlighted leading-tight">
+        <span class="text-primary">></span> tags
+      </h1>
+    </section>
 
-    <PageHeader title="Tags" subtitle="Browse posts by topic." />
-
-    <TagList :tags="tags ?? []" fallbackText="No tags yet." />
+    <TagList :tags="tags ?? []" fallbackText="# No tags yet." />
   </div>
 </template>

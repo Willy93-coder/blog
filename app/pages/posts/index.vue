@@ -1,8 +1,6 @@
 <script setup lang="ts">
   import PostList from '~/components/posts/PostList.vue';
-  import Breadcrumb from '~/components/common/Breadcrumb.vue';
   import Pagination from '~/components/common/Pagination.vue';
-  import PageHeader from '~/components/common/PageHeader.vue';
   import type { PostWithTagsAndAuthors } from '~/types/post';
 
   definePageMeta({
@@ -16,6 +14,7 @@
   const router = useRouter();
   const postFunctions = usePosts();
   const toast = useToast();
+  const routes = useRoutes();
 
   const page = computed(() => Number(route.query.page) || 1);
   const tagName = computed(() => (route.query.tag as string) || null);
@@ -45,15 +44,28 @@
 </script>
 
 <template>
-  <Breadcrumb
-    v-if="tagName"
-    :items="[{ label: 'Home', to: '/' }, { label: 'Posts', to: '/posts' }, { label: `#${tagName}` }]"
-  />
-  <Breadcrumb v-else :items="[{ label: 'Home', to: '/' }, { label: `Posts (Page ${page})` }]" />
+  <div class="space-y-8">
+    <!-- Header -->
+    <section>
+      <p class="font-mono text-xs text-dimmed mb-3">
+        $ ls ~/posts<template v-if="tagName"> --tag={{ tagName }}</template>
+      </p>
+      <div class="flex items-end justify-between gap-4">
+        <h1 class="text-2xl font-bold text-highlighted leading-tight">
+          <span class="text-primary">></span> <template v-if="tagName">posts / <span class="text-primary">[{{ tagName }}]</span></template><template v-else>posts</template>
+        </h1>
+        <NuxtLink
+          v-if="tagName"
+          :to="routes.posts()"
+          class="font-mono text-xs text-dimmed hover:text-primary transition-colors shrink-0"
+        >
+          [clear filter]
+        </NuxtLink>
+      </div>
+    </section>
 
-  <PageHeader title="Posts" :subtitle="tagName ? `Posts tagged #${tagName}.` : `All the articles I've posted.`" />
+    <PostList :posts="posts" fallbackText="# No posts published yet." />
 
-  <PostList :posts="posts ?? []" fallbackText="No posts published yet." />
-
-  <Pagination class="mt-auto pt-10" :page="page" :total-pages="totalPages" @change-page="changePage" />
+    <Pagination :page="page" :total-pages="totalPages" @change-page="changePage" />
+  </div>
 </template>
