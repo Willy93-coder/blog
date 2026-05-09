@@ -10,13 +10,13 @@
 </script>
 
 <template>
-  <nav class="flex items-center gap-1 text-sm text-muted mb-2">
+  <nav class="flex items-center font-mono text-xs text-dimmed mb-3">
     <template v-for="(item, index) in items" :key="index">
-      <span v-if="index > 0" class="mx-1">»</span>
-      <NuxtLink v-if="item.to" :to="item.to" class="transition-colors hover:text-primary">
-        {{ item.label }}
+      <span v-if="index > 0" class="mx-1 text-muted">/</span>
+      <NuxtLink v-if="item.to" :to="item.to" class="hover:text-primary transition-colors">
+        {{ index === 0 ? '~' : item.label.toLowerCase() }}
       </NuxtLink>
-      <span v-else>{{ item.label }}</span>
+      <span v-else>{{ item.label.toLowerCase() }}</span>
     </template>
   </nav>
 </template>

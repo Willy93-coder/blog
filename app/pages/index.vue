@@ -21,10 +21,15 @@
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold tracking-tight text-default sm:text-4xl mb-2 mt-4">Blog</h1>
-  <p class="text-muted mb-10">Articles about web development, code and other things.</p>
+  <div>
+    <p class="font-mono text-xs text-muted mb-1">$ cat recent-posts.md</p>
+    <h1 class="text-xl font-bold text-default mb-1">
+      <span class="text-primary mr-1">#</span>Blog
+    </h1>
+    <p class="font-mono text-xs text-muted mb-8">Articles about web development, code and other things.</p>
 
-  <USeparator class="mb-10" />
+    <USeparator class="mb-8" />
 
-  <PostList :posts="posts" title="Recent Posts" fallbackText="No posts published yet." />
+    <PostList :posts="posts" fallbackText="No posts published yet." />
+  </div>
 </template>

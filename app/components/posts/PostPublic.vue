@@ -13,11 +13,7 @@
 
   const formattedDate = computed(() => {
     const date = props.post.published_at ?? props.post.created_at;
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+    return new Date(date).toISOString().split('T')[0];
   });
 </script>
 
@@ -25,24 +21,24 @@
   <Breadcrumb :items="[{ label: 'Home', to: '/' }, { label: 'Posts', to: '/posts' }, { label: post.title }]" />
   <!-- Header -->
   <header class="mb-8">
-    <h1 class="text-3xl font-bold tracking-tight text-default sm:text-4xl">
-      {{ post.title }}
+    <h1 class="text-2xl font-bold text-default">
+      <span class="text-primary mr-1">#</span>{{ post.title }}
     </h1>
 
-    <p v-if="post.subtitle" class="mt-3 text-lg text-muted">
+    <p v-if="post.subtitle" class="mt-2 font-mono text-sm text-muted">
       {{ post.subtitle }}
     </p>
 
-    <div class="mt-5">
-      <PostAuthor :profile="author" link />
-    </div>
-    <div class="mt-4 flex flex-wrap items-center gap-3">
-      <time :datetime="post.published_at ?? post.created_at" class="text-sm text-dimmed">
-        {{ formattedDate }}
-      </time>
+    <div class="mt-4 flex flex-wrap items-center gap-3 font-mono text-xs text-dimmed">
+      <time :datetime="post.published_at ?? post.created_at">{{ formattedDate }}</time>
+
+      <template v-if="author">
+        <span class="text-muted">·</span>
+        <PostAuthor :profile="author" link />
+      </template>
 
       <template v-if="tags.length">
-        <USeparator orientation="vertical" class="h-4" />
+        <span class="text-muted">·</span>
         <div class="flex flex-wrap gap-1.5">
           <TagBadge v-for="tag in tags" :key="tag.id" :tag="tag.name" />
         </div>
@@ -50,7 +46,7 @@
     </div>
   </header>
 
-  <USeparator class="mb-8" />
+  <div class="font-mono text-xs text-muted mb-8">---</div>
 
   <!-- Content -->
   <div class="prose dark:prose-invert max-w-none">
