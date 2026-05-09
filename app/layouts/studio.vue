@@ -96,7 +96,7 @@
       collapsible
       resizable
       :ui="{
-        root: 'overflow-hidden',
+        root: 'overflow-hidden bg-elevated',
         footer: 'border-t border-default',
       }"
     >
@@ -124,7 +124,7 @@
     </UDashboardSidebar>
     <UDashboardPanel>
       <template #header>
-        <UDashboardNavbar>
+        <UDashboardNavbar :ui="{ root: 'bg-elevated' }">
           <template #leading>
             <UDashboardSidebarCollapse />
           </template>
