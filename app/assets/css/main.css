@@ -8,8 +8,8 @@
 
 /* ─── light mode ─────────────────────────────────────────── */
 :root {
-  /* primary: terminal green */
-  --ui-primary: #16a34a;
+  /* primary: terminal green — shade 600 of the 'green' palette */
+  --ui-primary: var(--ui-color-primary-600);
 
   /* radius: none */
   --ui-radius: 0;
@@ -42,8 +42,8 @@
 
 /* ─── dark mode ──────────────────────────────────────────── */
 .dark {
-  /* primary: bright terminal green */
-  --ui-primary: #4ade80;
+  /* primary: bright terminal green — shade 400 for dark mode legibility */
+  --ui-primary: var(--ui-color-primary-400);
 
   /* backgrounds */
   --ui-bg: #0a0a0a;
