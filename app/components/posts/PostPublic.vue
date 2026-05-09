@@ -46,7 +46,7 @@
     </div>
   </header>
 
-  <div class="font-mono text-xs text-muted mb-8">---</div>
+  <div class="font-mono text-xs text-muted mb-8" aria-hidden="true">---</div>
 
   <!-- Content -->
   <div class="prose dark:prose-invert max-w-none">
