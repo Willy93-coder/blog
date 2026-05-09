@@ -15,25 +15,25 @@
   --ui-radius: 0;
 
   /* backgrounds */
-  --ui-bg: #ffffff;
-  --ui-bg-muted: #f5f5f5;
+  --ui-bg: #fafafa;
+  --ui-bg-muted: #f0f0f0;
   --ui-bg-elevated: #ffffff;
-  --ui-bg-accented: #ebebeb;
+  --ui-bg-accented: #e4e4e4;
   --ui-bg-inverted: #0a0a0a;
 
-  /* text */
-  --ui-text-highlighted: #0a0a0a;
-  --ui-text: #171717;
-  --ui-text-toned: #404040;
-  --ui-text-muted: #737373;
-  --ui-text-dimmed: #a3a3a3;
+  /* text — clear hierarchy: highlighted > default > toned > muted > dimmed */
+  --ui-text-highlighted: #000000;
+  --ui-text: #0f0f0f;
+  --ui-text-toned: #383838;
+  --ui-text-muted: #525252;
+  --ui-text-dimmed: #888888;
   --ui-text-inverted: #ffffff;
 
-  /* borders */
-  --ui-border: #e5e5e5;
-  --ui-border-muted: #e5e5e5;
-  --ui-border-accented: #d4d4d4;
-  --ui-border-inverted: #0a0a0a;
+  /* borders — clearly visible structural lines */
+  --ui-border: #c0c0c0;
+  --ui-border-muted: #d4d4d4;
+  --ui-border-accented: #a8a8a8;
+  --ui-border-inverted: #000000;
 
   /* semantic */
   --ui-secondary: #16a34a;
@@ -48,23 +48,23 @@
   /* backgrounds */
   --ui-bg: #0a0a0a;
   --ui-bg-muted: #111111;
-  --ui-bg-elevated: #141414;
-  --ui-bg-accented: #1a1a1a;
+  --ui-bg-elevated: #161616;
+  --ui-bg-accented: #1e1e1e;
   --ui-bg-inverted: #f5f5f5;
 
-  /* text */
-  --ui-text-highlighted: #f5f5f5;
-  --ui-text: #e5e5e5;
-  --ui-text-toned: #a3a3a3;
-  --ui-text-muted: #737373;
-  --ui-text-dimmed: #525252;
+  /* text — clear hierarchy against near-black */
+  --ui-text-highlighted: #ffffff;
+  --ui-text: #e8e8e8;
+  --ui-text-toned: #b0b0b0;
+  --ui-text-muted: #a8a8a8;
+  --ui-text-dimmed: #666666;
   --ui-text-inverted: #0a0a0a;
 
-  /* borders */
-  --ui-border: #262626;
-  --ui-border-muted: #1f1f1f;
-  --ui-border-accented: #333333;
-  --ui-border-inverted: #f5f5f5;
+  /* borders — visible on pure black background */
+  --ui-border: #404040;
+  --ui-border-muted: #2e2e2e;
+  --ui-border-accented: #525252;
+  --ui-border-inverted: #ffffff;
 
   /* semantic */
   --ui-secondary: #4ade80;
