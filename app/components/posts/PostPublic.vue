@@ -55,6 +55,7 @@
       content-type="markdown"
       :editable="false"
       :starter-kit="{ link: { openOnClick: true } }"
+      :ui="{ base: 'sm:px-0' }"
     />
   </div>
 </template>
