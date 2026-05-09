@@ -58,7 +58,7 @@
 </script>
 
 <template>
-  <div class="border border-accented rounded-lg overflow-hidden">
+  <div class="border border-accented overflow-hidden">
     <div class="px-4 py-3 border-b border-accented">
       <h3 class="text-sm font-semibold">New Tag</h3>
     </div>
