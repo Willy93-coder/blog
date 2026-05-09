@@ -57,7 +57,7 @@
     <section>
       <div class="flex items-end justify-between mb-5">
         <div>
-          <p class="font-mono text-xs text-dimmed mb-1">/* recent-posts.log */</p>
+          <p class="font-mono text-xs text-dimmed mb-1"># recent-posts.log</p>
           <h2 class="text-xs font-mono font-medium text-highlighted uppercase tracking-wider">Recent Posts</h2>
         </div>
         <NuxtLink
@@ -99,7 +99,7 @@
         </NuxtLink>
       </div>
 
-      <p v-else class="font-mono text-xs text-dimmed">// No posts published yet.</p>
+      <p v-else class="font-mono text-xs text-dimmed"># No posts published yet.</p>
     </section>
   </div>
 </template>
