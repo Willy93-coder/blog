@@ -32,7 +32,7 @@
           :key="link.url"
           :to="link.url"
           class="font-mono text-xs text-muted transition-colors hover:text-primary"
-          active-class="text-primary"
+          active-class="text-primary underline underline-offset-4 decoration-primary"
         >
           {{ link.label }}
         </NuxtLink>
@@ -74,7 +74,7 @@
           <NuxtLink
             :to="link.url"
             class="block px-2 py-2 font-mono text-xs text-muted transition-colors hover:text-primary"
-            active-class="text-primary"
+            active-class="text-primary underline underline-offset-4 decoration-primary"
             @click="isMenuOpen = false"
           >
             {{ link.label }}
