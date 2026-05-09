@@ -17,7 +17,7 @@
 <template>
   <NuxtLink
     :to="routes.post(post.id)"
-    class="group flex items-center justify-between gap-4 py-2 transition-colors hover:text-primary"
+    class="group flex items-center justify-between gap-4 py-2 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-sm"
   >
     <span class="flex items-center gap-2 min-w-0">
       <span class="text-muted transition-colors group-hover:text-primary shrink-0">→</span>

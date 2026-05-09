@@ -14,7 +14,7 @@
     <button
       :disabled="page === 1"
       @click="emit('changePage', page - 1)"
-      class="cursor-pointer transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+      class="cursor-pointer transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-sm"
     >
       [← prev]
     </button>
@@ -24,7 +24,7 @@
     <button
       :disabled="page === totalPages"
       @click="emit('changePage', page + 1)"
-      class="cursor-pointer transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+      class="cursor-pointer transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-sm"
     >
       [next →]
     </button>

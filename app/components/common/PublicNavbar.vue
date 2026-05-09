@@ -40,7 +40,7 @@
         <button
           @click="toggleColorMode"
           :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-          class="cursor-pointer p-1.5 text-muted transition-colors hover:text-primary"
+          class="cursor-pointer p-1.5 text-muted transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-sm"
         >
           <UIcon :name="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="size-4" />
         </button>
@@ -51,7 +51,7 @@
         <button
           @click="toggleColorMode"
           :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-          class="cursor-pointer p-1.5 text-muted transition-colors hover:text-primary"
+          class="cursor-pointer p-1.5 text-muted transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-sm"
         >
           <UIcon :name="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="size-4" />
         </button>
@@ -60,7 +60,7 @@
           @click="isMenuOpen = !isMenuOpen"
           :aria-expanded="isMenuOpen"
           aria-label="Toggle menu"
-          class="cursor-pointer p-1.5 text-muted transition-colors hover:text-primary"
+          class="cursor-pointer p-1.5 text-muted transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-sm"
         >
           <UIcon :name="isMenuOpen ? 'i-lucide-x' : 'i-lucide-menu'" class="size-5" />
         </button>
