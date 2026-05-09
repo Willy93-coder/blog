@@ -17,11 +17,11 @@
 
   const displayedProfile = computed(() => props.authorProfile ?? profile.value ?? null);
 
-  const today = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+  const today = new Date().toISOString().split('T')[0];
 
   const formatDate = (dateStr: string | null | undefined) => {
     if (!dateStr) return '—';
-    return new Date(dateStr).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    return new Date(dateStr).toISOString().split('T')[0];
   };
 </script>
 
@@ -30,10 +30,10 @@
     <!-- Top row: metadata cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <!-- Post Details -->
-      <div class="border border-accented rounded-lg overflow-hidden">
+      <div class="border border-accented bg-elevated overflow-hidden">
         <div class="px-4 py-3 border-b border-accented">
-          <h3 class="text-sm font-semibold">Post Details</h3>
-          <p class="text-xs text-muted mt-0.5">Title and subtitle of your post.</p>
+          <h3 class="text-xs font-mono text-muted tracking-wider uppercase">Post Details</h3>
+          <p class="text-xs text-dimmed mt-0.5">Title and subtitle of your post.</p>
         </div>
         <div class="p-4 space-y-4">
           <UFormField
@@ -69,10 +69,10 @@
       <PostTagSection :post-id="postFormStore.originalPost.id" />
 
       <!-- Post Info -->
-      <div class="border border-accented rounded-lg overflow-hidden">
+      <div class="border border-accented bg-elevated overflow-hidden">
         <div class="px-4 py-3 border-b border-accented">
-          <h3 class="text-sm font-semibold">Post Info</h3>
-          <p class="text-xs text-muted mt-0.5">Author, status and publication dates.</p>
+          <h3 class="text-xs font-mono text-muted tracking-wider uppercase">Post Info</h3>
+          <p class="text-xs text-dimmed mt-0.5">Author, status and publication dates.</p>
         </div>
         <div class="p-4 space-y-3">
           <PostAuthor :profile="displayedProfile" />
@@ -105,13 +105,12 @@
     </div>
 
     <!-- Content editor — full width, last -->
-    <div class="border border-accented rounded-lg overflow-hidden">
+    <div class="border border-accented bg-elevated overflow-hidden">
       <div class="px-4 py-3 border-b border-accented">
-        <h3 class="text-sm font-semibold">
-          Post Content
-          <span class="text-error">*</span>
+        <h3 class="text-xs font-mono text-muted tracking-wider uppercase">
+          Post Content <span class="text-error">*</span>
         </h3>
-        <p class="text-xs text-muted mt-0.5">Write your post using the rich text editor below.</p>
+        <p class="text-xs text-dimmed mt-0.5">Write your post using the rich text editor below.</p>
       </div>
       <RichTextEditor
         v-model="postFormStore.form.content"

@@ -58,9 +58,9 @@
 </script>
 
 <template>
-  <div class="border border-accented overflow-hidden">
+  <div class="border border-accented bg-elevated overflow-hidden">
     <div class="px-4 py-3 border-b border-accented">
-      <h3 class="text-sm font-semibold">New Tag</h3>
+      <h3 class="text-xs font-mono text-muted tracking-wider uppercase">New Tag</h3>
     </div>
     <div class="p-4">
       <UForm :schema="tagSchema" :state="formState" @submit="onSubmit">
