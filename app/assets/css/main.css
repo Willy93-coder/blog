@@ -1,72 +1,191 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 @import 'tailwindcss';
 @import '@nuxt/ui';
 
 @theme {
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'IBM Plex Mono', ui-monospace, monospace;
 }
 
 /* ─── light mode ─────────────────────────────────────────── */
 :root {
-  /* primary: pure black */
-  --ui-primary: #000000;
+  /* primary: terminal green — shade 600 of the 'green' palette */
+  --ui-primary: var(--ui-color-primary-600);
 
-  /* radius: sharp */
-  --ui-radius: 0.25rem;
+  /* radius: none */
+  --ui-radius: 0;
 
   /* backgrounds */
-  --ui-bg: #ffffff;
-  --ui-bg-muted: #fafafa;
+  --ui-bg: #fafafa;
+  --ui-bg-muted: #f0f0f0;
   --ui-bg-elevated: #ffffff;
-  --ui-bg-accented: #f2f2f2;
-  --ui-bg-inverted: #000000;
+  --ui-bg-accented: #e4e4e4;
+  --ui-bg-inverted: #0a0a0a;
 
-  /* text */
+  /* text — clear hierarchy: highlighted > default > toned > muted > dimmed */
   --ui-text-highlighted: #000000;
-  --ui-text: #111111;
-  --ui-text-toned: #444444;
-  --ui-text-muted: #666666;
-  --ui-text-dimmed: #999999;
+  --ui-text: #0f0f0f;
+  --ui-text-toned: #383838;
+  --ui-text-muted: #525252;
+  --ui-text-dimmed: #888888;
   --ui-text-inverted: #ffffff;
 
-  /* borders */
-  --ui-border: #eaeaea;
-  --ui-border-muted: #eaeaea;
-  --ui-border-accented: #e2e2e2;
+  /* borders — clearly visible structural lines */
+  --ui-border: #c0c0c0;
+  --ui-border-muted: #d4d4d4;
+  --ui-border-accented: #a8a8a8;
   --ui-border-inverted: #000000;
 
   /* semantic */
-  --ui-secondary: #0070f3;
-  --ui-error: #e00;
+  --ui-secondary: #16a34a;
+  --ui-error: #dc2626;
+}
+
+/* ─── syntax highlighting — github-nvim-theme (Primer) ─── */
+
+/* keywords & storage: red */
+.hljs-keyword,
+.hljs-storage,
+.hljs-operator {
+  color: #d73a49;
+}
+
+/* functions, entities, types: purple */
+.hljs-built_in,
+.hljs-title.function_,
+.hljs-title.function,
+.hljs-type,
+.hljs-class {
+  color: #6f42c1;
+}
+
+/* constants, numbers, class names: blue */
+.hljs-number,
+.hljs-literal,
+.hljs-title.class_,
+.hljs-property,
+.hljs-constant {
+  color: #005cc5;
+}
+
+/* strings & attributes: dark navy */
+.hljs-string,
+.hljs-attr,
+.hljs-attribute,
+.hljs-template-variable {
+  color: #032f62;
+}
+
+/* variables & params: orange */
+.hljs-variable,
+.hljs-params,
+.hljs-name {
+  color: #e36209;
+}
+
+/* tags (HTML/JSX): green */
+.hljs-tag,
+.hljs-selector-tag {
+  color: #22863a;
+}
+
+/* comments: muted gray + italic */
+.hljs-comment,
+.hljs-quote {
+  color: #6a737d;
+  font-style: italic;
+}
+
+/* selectors: purple */
+.hljs-selector-class,
+.hljs-selector-id {
+  color: #6f42c1;
+}
+
+/* meta & decorators: red */
+.hljs-meta {
+  color: #d73a49;
 }
 
 /* ─── dark mode ──────────────────────────────────────────── */
 .dark {
-  /* primary: pure white */
-  --ui-primary: #ffffff;
+  /* primary: bright terminal green — shade 400 for dark mode legibility */
+  --ui-primary: var(--ui-color-primary-400);
 
   /* backgrounds */
-  --ui-bg: #000000;
+  --ui-bg: #0a0a0a;
   --ui-bg-muted: #111111;
-  --ui-bg-elevated: #111111;
-  --ui-bg-accented: #1a1a1a;
-  --ui-bg-inverted: #ffffff;
+  --ui-bg-elevated: #161616;
+  --ui-bg-accented: #1e1e1e;
+  --ui-bg-inverted: #f5f5f5;
 
-  /* text */
+  /* text — clear hierarchy against near-black */
   --ui-text-highlighted: #ffffff;
-  --ui-text: #ededed;
-  --ui-text-toned: #a1a1a1;
-  --ui-text-muted: #888888;
+  --ui-text: #e8e8e8;
+  --ui-text-toned: #b0b0b0;
+  --ui-text-muted: #a8a8a8;
   --ui-text-dimmed: #666666;
-  --ui-text-inverted: #000000;
+  --ui-text-inverted: #0a0a0a;
 
-  /* borders */
-  --ui-border: #333333;
-  --ui-border-muted: #2a2a2a;
-  --ui-border-accented: #3d3d3d;
+  /* borders — visible on pure black background */
+  --ui-border: #404040;
+  --ui-border-muted: #2e2e2e;
+  --ui-border-accented: #525252;
   --ui-border-inverted: #ffffff;
 
   /* semantic */
-  --ui-secondary: #3291ff;
-  --ui-error: #ff4444;
+  --ui-secondary: #4ade80;
+  --ui-error: #f87171;
+}
+
+/* ─── syntax dark overrides — github_dark palette ────────── */
+
+.dark .hljs-keyword,
+.dark .hljs-storage,
+.dark .hljs-operator {
+  color: #ff7b72;
+}
+
+.dark .hljs-built_in,
+.dark .hljs-title.function_,
+.dark .hljs-title.function,
+.dark .hljs-type,
+.dark .hljs-class,
+.dark .hljs-selector-class,
+.dark .hljs-selector-id {
+  color: #d2a8ff;
+}
+
+.dark .hljs-number,
+.dark .hljs-literal,
+.dark .hljs-title.class_,
+.dark .hljs-property,
+.dark .hljs-constant {
+  color: #79c0ff;
+}
+
+.dark .hljs-string,
+.dark .hljs-attr,
+.dark .hljs-attribute,
+.dark .hljs-template-variable {
+  color: #a5d6ff;
+}
+
+.dark .hljs-variable,
+.dark .hljs-params,
+.dark .hljs-name {
+  color: #ffa657;
+}
+
+.dark .hljs-tag,
+.dark .hljs-selector-tag {
+  color: #7ee787;
+}
+
+.dark .hljs-comment,
+.dark .hljs-quote {
+  color: #8b949e;
+}
+
+.dark .hljs-meta {
+  color: #ff7b72;
 }

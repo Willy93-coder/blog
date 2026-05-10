@@ -10,25 +10,23 @@
 </script>
 
 <template>
-  <div v-if="totalPages > 1" class="flex items-center justify-center gap-6 text-sm font-medium text-muted">
+  <div v-if="totalPages > 1" class="flex items-center justify-center gap-6 font-mono text-xs text-muted">
     <button
       :disabled="page === 1"
       @click="emit('changePage', page - 1)"
-      class="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-default disabled:cursor-not-allowed disabled:opacity-40 dark:hover:text-default"
+      class="cursor-pointer transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-sm"
     >
-      <UIcon name="i-lucide-arrow-left" class="size-4" />
-      Prev
+      [← prev]
     </button>
 
-    <span>{{ page }} / {{ totalPages }}</span>
+    <span class="text-dimmed">{{ page }}/{{ totalPages }}</span>
 
     <button
       :disabled="page === totalPages"
       @click="emit('changePage', page + 1)"
-      class="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-default disabled:cursor-not-allowed disabled:opacity-40 dark:hover:text-default"
+      class="cursor-pointer transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-sm"
     >
-      Next
-      <UIcon name="i-lucide-arrow-right" class="size-4" />
+      [next →]
     </button>
   </div>
 </template>

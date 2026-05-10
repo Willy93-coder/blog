@@ -16,6 +16,8 @@
 
   const emit = defineEmits<Emits>();
 
+  const codeHighlight = useCodeHighlight();
+
   const content = computed({
     get: () => props.modelValue || undefined,
     set: (value: string) => emit('update:modelValue', value),
@@ -31,11 +33,8 @@
       :placeholder="placeholder"
       class="w-full min-h-96"
       :editable="!props.disabled"
-      :starter-kit="{
-        link: {
-          openOnClick: false,
-        },
-      }"
+      :starter-kit="{ link: { openOnClick: false }, codeBlock: false }"
+      :extensions="codeHighlight"
     >
       <UEditorToolbar
         v-if="!props.disabled"

@@ -49,10 +49,10 @@
 </script>
 
 <template>
-  <div class="border border-accented rounded-lg overflow-hidden">
+  <div class="border border-accented bg-elevated overflow-hidden">
     <div class="px-4 py-3 border-b border-accented">
-      <h3 class="text-sm font-semibold">Post Tags</h3>
-      <p class="text-xs text-muted mt-0.5">Associate tags with this post.</p>
+      <h3 class="text-xs font-mono text-muted tracking-wider uppercase">Post Tags</h3>
+      <p class="text-xs text-dimmed mt-0.5">Associate tags with this post.</p>
     </div>
     <div class="p-4 space-y-3">
       <div class="flex items-end gap-3">

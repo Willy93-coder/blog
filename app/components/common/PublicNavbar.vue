@@ -12,17 +12,14 @@
   const routes = useRoutes();
 
   const navLinks: PublicNavbar[] = [
-    { label: 'Posts', url: routes.posts() },
-    { label: 'Tags', url: routes.tags() },
-    // { label: 'About', url: routes.about() },
+    { label: '~/posts', url: routes.posts() },
+    { label: '~/tags', url: routes.tags() },
   ];
 </script>
 
 <template>
-  <header
-    class="sticky top-0 z-50 w-full border-b border-default bg-default/80 backdrop-blur-sm dark:border-default dark:bg-default/80"
-  >
-    <nav class="mx-auto flex max-w-3xl items-center justify-between px-4 py-4">
+  <header class="sticky top-0 z-50 w-full border-b border-default bg-default">
+    <nav class="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
       <!-- Logo -->
       <NuxtLink :to="routes.home()" aria-label="GMV-Blog">
         <AppLogo />
@@ -34,18 +31,16 @@
           v-for="link in navLinks"
           :key="link.url"
           :to="link.url"
-          class="flex items-center gap-1.5 text-sm font-medium text-muted underline-offset-4 transition-colors hover:text-default hover:underline dark:text-muted dark:hover:text-default"
-          active-class="text-default underline dark:text-default"
+          class="font-mono text-xs text-muted transition-colors hover:text-primary"
+          active-class="text-primary underline underline-offset-4 decoration-primary"
         >
-          <UIcon v-if="link.icon" :name="link.icon" class="size-3.5" />
           {{ link.label }}
         </NuxtLink>
 
-        <!-- Dark mode toggle -->
         <button
           @click="toggleColorMode"
           :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-          class="rounded-md p-1.5 text-muted transition-colors hover:bg-muted hover:text-default dark:text-muted dark:hover:bg-accented dark:hover:text-default"
+          class="cursor-pointer p-1.5 text-muted transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-sm"
         >
           <UIcon :name="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="size-4" />
         </button>
@@ -56,7 +51,7 @@
         <button
           @click="toggleColorMode"
           :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-          class="rounded-md p-1.5 text-muted transition-colors hover:bg-muted hover:text-default dark:text-muted dark:hover:bg-accented dark:hover:text-default"
+          class="cursor-pointer p-1.5 text-muted transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-sm"
         >
           <UIcon :name="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="size-4" />
         </button>
@@ -65,7 +60,7 @@
           @click="isMenuOpen = !isMenuOpen"
           :aria-expanded="isMenuOpen"
           aria-label="Toggle menu"
-          class="rounded-md p-1.5 text-muted transition-colors hover:bg-muted hover:text-default dark:text-muted dark:hover:bg-accented dark:hover:text-default"
+          class="cursor-pointer p-1.5 text-muted transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-sm"
         >
           <UIcon :name="isMenuOpen ? 'i-lucide-x' : 'i-lucide-menu'" class="size-5" />
         </button>
@@ -73,16 +68,15 @@
     </nav>
 
     <!-- Mobile menu -->
-    <div v-if="isMenuOpen" class="border-t border-default dark:border-default sm:hidden">
+    <div v-if="isMenuOpen" class="border-t border-default sm:hidden">
       <ul class="mx-auto max-w-3xl space-y-1 px-4 py-3">
         <li v-for="link in navLinks" :key="link.url">
           <NuxtLink
             :to="link.url"
-            class="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-toned transition-colors hover:bg-muted hover:text-default dark:text-muted dark:hover:bg-accented dark:hover:text-default"
-            active-class="bg-muted text-default dark:bg-accented dark:text-default"
+            class="block px-2 py-2 font-mono text-xs text-muted transition-colors hover:text-primary"
+            active-class="text-primary underline underline-offset-4 decoration-primary"
             @click="isMenuOpen = false"
           >
-            <UIcon v-if="link.icon" :name="link.icon" class="size-4" />
             {{ link.label }}
           </NuxtLink>
         </li>

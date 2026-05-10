@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import type { Tag } from '~/types/tag';
+  import TagBadge from './TagBadge.vue';
 
   defineProps<{
     tags: Tag[] | undefined;
@@ -8,16 +9,16 @@
 </script>
 
 <template>
-  <div v-if="tags?.length" class="flex flex-row flex-wrap gap-3">
+  <div v-if="tags?.length" class="flex flex-row flex-wrap gap-2">
     <NuxtLink
       v-for="tag in tags"
       :key="tag.id"
       :to="`/posts?tag=${tag.name}`"
-      class="transition-opacity hover:opacity-70"
+      class="focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-sm"
     >
-      <UBadge color="neutral" variant="outline" class="cursor-pointer text-sm">#{{ tag.name }}</UBadge>
+      <TagBadge :tag="tag.name" />
     </NuxtLink>
   </div>
 
-  <p v-else class="text-sm text-dimmed">{{ fallbackText }}</p>
+  <p v-else class="font-mono text-xs text-dimmed">{{ fallbackText }}</p>
 </template>

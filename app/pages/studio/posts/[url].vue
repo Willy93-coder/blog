@@ -78,8 +78,10 @@
   <div class="space-y-6">
     <div class="flex items-start justify-between">
       <div>
-        <h1 class="text-2xl font-bold">{{ isNew ? 'New Post' : 'Edit Post' }}</h1>
-        <p class="text-sm text-muted mt-1">
+        <h1 class="text-xl font-bold text-highlighted">
+          <span class="text-primary mr-1">#</span>{{ isNew ? 'New Post' : 'Edit Post' }}
+        </h1>
+        <p class="font-mono text-xs text-muted mt-1">
           {{ isNew ? 'Create a new blog post.' : 'Edit your blog post.' }}
         </p>
       </div>

@@ -167,7 +167,7 @@
 </script>
 
 <template>
-  <div class="border border-accented rounded-lg overflow-hidden">
+  <div class="border border-accented bg-elevated overflow-hidden">
     <div class="px-4 py-3 border-b border-accented flex items-center justify-end min-h-13">
       <UButton
         v-if="selectedIds.length > 0"
