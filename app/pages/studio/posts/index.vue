@@ -70,8 +70,10 @@
   <div class="space-y-6">
     <div class="flex items-start justify-between">
       <div>
-        <h1 class="text-2xl font-bold">Posts</h1>
-        <p class="text-sm text-muted mt-1">Manage your blog posts.</p>
+        <h1 class="text-xl font-bold text-highlighted">
+          <span class="text-primary mr-1">#</span>Posts
+        </h1>
+        <p class="font-mono text-xs text-muted mt-1">Manage your blog posts.</p>
       </div>
       <UButton icon="i-lucide-plus" :to="routes.studioPostsNew()">New Post</UButton>
     </div>

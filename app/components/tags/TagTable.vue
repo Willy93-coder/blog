@@ -90,10 +90,14 @@
     {
       accessorKey: 'created_at',
       header: 'Created',
+      cell: ({ row }) =>
+        h('span', { class: 'font-mono text-xs text-muted' }, new Date(row.getValue('created_at')).toISOString().split('T')[0]),
     },
     {
       accessorKey: 'updated_at',
       header: 'Updated',
+      cell: ({ row }) =>
+        h('span', { class: 'font-mono text-xs text-muted' }, new Date(row.getValue('updated_at')).toISOString().split('T')[0]),
     },
     {
       id: 'actions',
@@ -137,7 +141,7 @@
 </script>
 
 <template>
-  <div class="border border-accented rounded-lg overflow-hidden">
+  <div class="border border-accented bg-elevated overflow-hidden">
     <div class="px-4 py-3 border-b border-accented flex items-center justify-end min-h-13">
       <UButton
         v-if="selectedIds.length > 0"

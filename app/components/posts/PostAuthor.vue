@@ -20,7 +20,7 @@
     :is="githubUserUrl ? 'a' : 'div'"
     v-if="profile"
     class="flex items-center gap-3"
-    v-bind="githubUserUrl ? { href: githubUserUrl, target: '_blank', rel: 'noopener noreferrer' } : {}"
+    v-bind="githubUserUrl ? { href: githubUserUrl, target: '_blank', rel: 'noopener noreferrer', 'aria-label': `View ${profile?.full_name ?? profile?.github_username} on GitHub` } : {}"
   >
     <UAvatar
       :src="profile.github_avatar_url ?? undefined"

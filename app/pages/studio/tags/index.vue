@@ -63,8 +63,10 @@
 <template>
   <div class="space-y-6">
     <div>
-      <h1 class="text-2xl font-bold">Tags</h1>
-      <p class="text-sm text-muted mt-1">Manage the tags used across your blog posts.</p>
+      <h1 class="text-xl font-bold text-highlighted">
+        <span class="text-primary mr-1">#</span>Tags
+      </h1>
+      <p class="font-mono text-xs text-muted mt-1">Manage the tags used across your blog posts.</p>
     </div>
     <TagForm :callback="onCreateTag" />
     <TagTable :tagList="tagList" @delete="onDeleteTags" @update="onUpdateTag" />

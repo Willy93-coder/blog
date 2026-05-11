@@ -107,7 +107,7 @@
       variant="ghost"
       block
       :square="collapsed"
-      class="data-[state=open]:bg-elevated"
+      class="data-[state=open]:bg-primary/10 hover:text-primary hover:bg-primary/10"
       :ui="{
         trailingIcon: 'text-dimmed',
       }"

@@ -3,6 +3,8 @@ import { useRoutes } from '~/composables/useRoutes';
 import { useAuth } from '~/composables/useAuth';
 
 export default defineNuxtRouteMiddleware(async (to) => {
+  if (import.meta.dev) return;
+
   // Public URLs
   if (to.meta.public) return;
 

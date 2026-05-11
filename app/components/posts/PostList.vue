@@ -9,11 +9,11 @@
 </script>
 
 <template>
-  <ul v-if="posts?.length" class="divide-y divide-default">
-    <li v-for="post in posts" :key="post.id" class="py-1">
+  <div v-if="posts?.length" class="border border-accented bg-elevated overflow-hidden">
+    <div v-for="post in posts" :key="post.id" class="border-b border-accented last:border-b-0">
       <PostLink :post="post" />
-    </li>
-  </ul>
+    </div>
+  </div>
 
-  <p v-else class="text-dimmed text-sm">{{ fallbackText }}</p>
+  <p v-else class="font-mono text-xs text-dimmed">{{ fallbackText }}</p>
 </template>

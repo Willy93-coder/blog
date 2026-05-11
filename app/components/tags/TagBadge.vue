@@ -1,9 +1,11 @@
 <script setup lang="ts">
-  const props = defineProps<{
+  defineProps<{
     tag: string;
   }>();
 </script>
 
 <template>
-  <UBadge color="neutral" variant="outline">{{ tag }}</UBadge>
+  <span class="font-mono text-xs text-muted border border-default px-1.5 py-0.5 transition-colors hover:text-primary hover:border-primary">
+    [{{ tag }}]
+  </span>
 </template>
