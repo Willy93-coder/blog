@@ -1,0 +1,13 @@
+# Supabase
+.branches
+.temp
+
+# Private data that must never be committed to a public repo (GitHub
+# usernames allowed to author on the blog). Apply manually after a
+# rebuild — see seed.local.sql.
+seed.local.sql
+
+# dotenvx
+.env.keys
+.env.local
+.env.*.local
