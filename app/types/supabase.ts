@@ -4,7 +4,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: '14.1';
+    PostgrestVersion: '14.5';
   };
   public: {
     Tables: {
@@ -27,6 +27,7 @@ export type Database = {
         Row: {
           content: string;
           created_at: string;
+          created_by: string;
           id: string;
           published: boolean;
           published_at: string | null;
@@ -37,6 +38,7 @@ export type Database = {
         Insert: {
           content: string;
           created_at?: string;
+          created_by?: string;
           id?: string;
           published?: boolean;
           published_at?: string | null;
@@ -47,6 +49,7 @@ export type Database = {
         Update: {
           content?: string;
           created_at?: string;
+          created_by?: string;
           id?: string;
           published?: boolean;
           published_at?: string | null;
@@ -54,7 +57,15 @@ export type Database = {
           title?: string;
           updated_at?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: 'post_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profile';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       post_tag: {
         Row: {
@@ -176,7 +187,6 @@ export type Database = {
     };
     Functions: {
       is_allowlisted: { Args: never; Returns: boolean };
-      is_post_author: { Args: { p_post_id: string }; Returns: boolean };
     };
     Enums: {
       [_ in never]: never;
